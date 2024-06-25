@@ -20,17 +20,20 @@ keypoints:
 
 ---
 
-::::::::::::::::::::::: instructor
+> ## Instructor Note
+> Tip: use .head() method throughout this lesson to keep your display 
+> neater for students.
+> Encourage students to try with and without .head() 
+> to reinforce this useful tool and then to use it or not at their 
+> preference.
+> 
+> For example, if a student worries about keeping up in pace with typing,
+> let them know they can skip the .head(),
+> but that you'll use it to keep more lines of previous steps visible.
+> 
+> {: .source}
+{: .callout}
 
-Tip: use .head() method throughout this lesson to keep your display neater for students.
-Encourage students to try with and without .head() 
-to reinforce this useful tool and then to use it or not at their preference.
-
-For example, if a student worries about keeping up in pace with typing,
-let them know they can skip the .head(),
-but that you'll use it to keep more lines of previous steps visible.
-
-::::::::::::::::::::::::::::::::::
 
 In the first episode of this lesson, we read a CSV file into a pandas' DataFrame. We learned how to:
 
@@ -67,16 +70,16 @@ numeric ranges, or specific x,y index locations.
 ## Selecting data using Labels (Column Headings)
 
 We use square brackets [] to select a subset of a Python object. For example,
-we can select all data from a column named species_id from the surveys_df
+we can select all data from a column named species_id from the births_df
 DataFrame by name. There are two ways to do this:
 
 ```python
 # TIP: use the .head() method we saw earlier to make output shorter
 # Method 1: select a 'subset' of the data using the column name
-surveys_df['year']
+births_df['year']
 
 # Method 2: use the column name as an 'attribute'; gives the same output
-surveys_df.year
+births_df.year
 ```
 
 We can also create a new object that contains only the data within the
@@ -84,7 +87,7 @@ species_id column as follows:
 
 ```python
 # Creates an object, surveys_species, that only contains the species_id column
-surveys_years = surveys_df['year']
+surveys_years = births_df['year']
 ```
 
 We can pass a list of column names too, as an index to select columns in that
@@ -95,17 +98,17 @@ order. This is useful when we need to reorganize our data.
 
 ```python
 # Select the species and plot columns from the DataFrame
-surveys_df[['year', 'birth']]
+births_df[['year', 'births']]
 
 # What happens when you flip the order?
-surveys_df[['birth', 'yaer']]
+births_df[['births', 'year']]
 
 # What happens if you ask for a column that doesn't exist?
-surveys_df['fake_column']
+births_df['fake_column']
 ```
 
 Python tells us what type of error it is in the traceback, at the bottom it says
-KeyError: 'speciess' which means that speciess is not a valid column name (nor a valid key in
+KeyError: 'fake_column' which means that fake_column is not a valid column name (nor a valid key in
 the related Python data type dictionary).
 
 
@@ -127,16 +130,14 @@ list using list(sometuple).
 > {: .source}
 {: .callout}
 
-
-
-## Extracting Range based Subsets: Slicing
-
 > ## Reminder
 > 
 > Python uses 0-based indexing.
 > 
 > {: .source}
 {: .callout}
+
+## Extracting Range based Subsets: Slicing
 
 Let's remind ourselves that Python uses 0-based
 indexing. This means that the first element in an object is located at position
@@ -148,52 +149,50 @@ within objects starting at 1.
 a = [1, 2, 3, 4, 5]
 ```
 
-![](fig/slicing-indexing.png){alt='indexing diagram'}
-![](fig/slicing-slicing.png){alt='slicing diagram'}
+![Indexing Diagram](/assets/img/slicing-indexing.png)
+![Slicing Diagram](/assets/img/slicing-slicing.png)
 
-:::::::::::::::::::::::::::::::::::::::  challenge
 
-## Challenge - Extracting data
+> ## Challenge - Extracting Data
+> 
+> 1. What value does the code below return?
+>   ```python 
+>   a[0]
+>   ```
+>2. How about this:
+>   ```python 
+>   a[5]
+>   ```
+>3. In the example above, calling a[5] returns an error. Why is that?
+>4. What about?
+>   ```python 
+>   a[len(a)]
+>   ```
+> 
+> > ## Solution
+> > 
+> > 1. a[0] returns 1, as  Python starts with element 0 
+> > (this may be different from what you have previously experience with other 
+> > languages e.g. MATLAB and R)
+> > 2. a[5] raises an IndexError
+> > 3. The error is raised because the list a has no element with index 5:
+> > it has only five entries, indexed from 0 to 4.
+> > 4. a[len(a)] also raises an IndexError
+> >    len(a) returns 5, making a[len(a)] equivalent to a[5].
+> >    To retreive the final element of a list, us the index -1, e.g.
+> > 
+> >    ```python
+> >    a[-1]
+> >    ```
+> >    
+> >    ```output
+> >    5
+> >    ```
+> > 
+> {: .solution}
+{: .challenge}
 
-1. What value does the code below return?
-   
-   ```python 
-   a[0]
-   ```
-2. How about this:
-   
-   ```python 
-   a[5]
-   ```
-3. In the example above, calling a[5] returns an error. Why is that?
-4. What about?
-   
-   ```python 
-   a[len(a)]
-   ```
 
-::::::::::::::::::::::: solution
-
-1. a[0] returns 1, as  Python starts with element 0 
-   (this may be different from what you have previously experience with other languages e.g. MATLAB and R)
-2. a[5] raises an IndexError
-3. The error is raised because the list a has no element with index 5:
-   it has only five entries, indexed from 0 to 4.
-4. a[len(a)] also raises an IndexError.
-   len(a) returns 5, making a[len(a)] equivalent to a[5].
-   To retreive the final element of a list, us the index -1, e.g.
-   
-   ```python
-   a[-1]
-   ```
-   
-   ```output
-   5
-   ```
-
-::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Slicing Subsets of Rows in Python
 
@@ -205,7 +204,7 @@ want to select rows 0, 1 and 2 your code would look like this:
 
 ```python
 # Select rows 0, 1, 2 (row 3 is not selected)
-surveys_df[0:3]
+births_df[0:3]
 ```
 
 The stop bound in Python is different from what you might be used to in
@@ -213,11 +212,11 @@ languages like Matlab and R.
 
 ```python
 # Select the first 5 rows (rows 0, 1, 2, 3, 4)
-surveys_df[:5]
+births_df[:5]
 
 # Select the last element in the list
 # (the slice starts at the last element, and ends at the end of the list)
-surveys_df[-1:]
+births_df[-1:]
 ```
 
 We can also reassign values within subsets of our DataFrame.
@@ -231,14 +230,14 @@ Let's start with an example:
 
 ```python
 # Using the 'copy() method'
-true_copy_surveys_df = surveys_df.copy()
+true_copy_births_df = births_df.copy()
 
 # Using the '=' operator
-ref_surveys_df = surveys_df
+ref_births_df = births_df
 ```
 
-You might think that the code ref_surveys_df = surveys_df creates a fresh
-distinct copy of the surveys_df DataFrame object. However, using the =
+You might think that the code ref_births_df = births_df creates a fresh
+distinct copy of the births_df DataFrame object. However, using the =
 operator in the simple statement y = x does **not** create a copy of our
 DataFrame. Instead, y = x creates a new variable y that references the
 **same** object that x refers to. To state this another way, there is only
@@ -252,32 +251,32 @@ DataFrame that references another DataFrame object:
 
 ```python
 # Assign the value 0 to the first three rows of data in the DataFrame
-ref_surveys_df[0:3] = 0
+ref_births_df[0:3] = 0
 ```
 
 Let's try the following code:
 
 ```python
-# ref_surveys_df was created using the '=' operator
-ref_surveys_df.head()
+# ref_births_df was created using the '=' operator
+ref_births_df.head()
 
-# true_copy_surveys_df was created using the copy() function
-true_copy_surveys_df.head()
+# true_copy_births_df was created using the copy() function
+true_copy_births_df.head()
 
-# surveys_df is the original dataframe
-surveys_df.head()
+# births_df is the original dataframe
+births_df.head()
 ```
 
 What is the difference between these three dataframes?
 
 When we assigned the first 3 rows the value of 0 using the
-ref_surveys_df DataFrame, the surveys_df DataFrame is modified too.
-Remember we created the reference ref_surveys_df object above when we did
-ref_surveys_df = surveys_df. Remember surveys_df and ref_surveys_df
+ref_births_df DataFrame, the births_df DataFrame is modified too.
+Remember we created the reference ref_births_df object above when we did
+ref_births_df = births_df. Remember births_df and ref_births_df
 refer to the same exact DataFrame object. If either one changes the object,
 the other will see the same changes to the reference object.
 
-However - true_copy_surveys_df was created via the copy() function.
+However - true_copy_births_df was created via the copy() function.
 It retains the original values for the first three rows.
 
 **To review and recap**:
@@ -285,20 +284,19 @@ It retains the original values for the first three rows.
 - **Copy** uses the dataframe's copy() method
   
   ```python 
-  true_copy_surveys_df = surveys_df.copy()
+  true_copy_births_df = births_df.copy()
   ```
 
 - A **Reference** is created using the = operator
   
   ```python 
-  ref_surveys_df = surveys_df
+  ref_births_df = births_df
   ```
-
 Okay, that's enough of that. Let's create a brand new clean dataframe from
 the original data CSV file.
 
 ```python
-surveys_df = pd.read_csv("data/surveys.csv")
+births_df = pd.read_csv("data/US_births_2000-2014_SSA.csv")
 ```
 
 ## Slicing Subsets of Rows and Columns in Python
@@ -320,17 +318,13 @@ and 4 if we start counting at 1), like this:
 
 ```python
 # iloc[row slicing, column slicing]
-surveys_df.iloc[0:3, 1:4]
+births_df.iloc[0:3, 1:4]
 ```
 
 which gives the **output**
 
-```output
-   month  day  year
-0      7   16  1977
-1      7   16  1977
-2      7   16  1977
-```
+![Small Slice](/assets/img/small-slice.png)
+
 
 Notice that we asked for a slice from 0:3. This yielded 3 rows of data. When you
 ask for 0:3, you are actually telling Python to start at index 0 and select rows
@@ -340,13 +334,13 @@ Let's explore some other ways to index and select subsets of data:
 
 ```python
 # Select all columns for rows of index values 0 and 10
-surveys_df.loc[[0, 10], :]
+births_df.loc[[0, 10], :]
 
 # What does this do?
-surveys_df.loc[0, ['species_id', 'plot_id', 'weight']]
+births_df.loc[0, ['year', 'month', 'date_of_month']]
 
 # What happens when you type the code below?
-surveys_df.loc[[0, 10, 35549], :]
+births_df.loc[[0, 10, 35549], :]
 ```
 
 **NOTE**: Labels must be found in the DataFrame or you will get a KeyError.
@@ -368,13 +362,13 @@ dat.iloc[row, column]
 In this iloc example,
 
 ```python
-surveys_df.iloc[2, 6]
+births_df.iloc[2, 3]
 ```
 
 gives the **output**
 
 ```output
-'F'
+'1'
 ```
 
 Remember that Python indexing begins at 0. So, the index location [2, 6]
@@ -383,7 +377,7 @@ selects the element that is 3 rows down and 7 columns over in the DataFrame.
 It is worth noting that rows are selected when using loc with a single list of
 labels (or iloc with a single list of integers). However, unlike loc or iloc,
 indexing a data frame directly with labels will select columns (e.g.
-surveys_df[['species_id', 'plot_id', 'weight']]), while ranges of integers will
+births_df[['species_id', 'plot_id', 'weight']]), while ranges of integers will
 select rows (e.g. surveys\_df[0:13]). Direct indexing of rows is redundant with
 using iloc, and will raise a KeyError if a single integer or list is used; the
 error will also occur if index labels are used without loc (or column labels used
@@ -393,66 +387,47 @@ iloc and will avoid errors (and is generally consistent with indexing of Numpy
 arrays), label-based slicing of rows is done with loc, and slicing of columns by
 directly indexing column names.
 
-:::::::::::::::::::::::::::::::::::::::  challenge
 
-## Challenge - Range
+> ## Challenge - Range
+> 
+> 1. What happens when you execute:
+>    - births_df[0:1]
+>    - births_df[0]
+>    - births_df[:4]
+>    - births_df[:-1]
+> 2. What happens when you call:
+>    - births_df.iloc[0:1]
+>    - births_df.iloc[0]
+>    - births_df.iloc[:4, :]
+>    - births_df.iloc[0:4, 1:4]
+>    - births_df.loc[0:4, 1:4]
+> 3. How are the last two commands different?
+> 
+> > ## Solution
+> > 
+> > 1. 
+> >    - births_df[0:3] returns the first three rows of the DataFrame:
+> >    ![Top 3](/assets/img/top-three.png)
+> >    - births_df[0:1] can be used to obtain only the first row.
+> >    - births_df[0] results in a 'KeyError', since direct indexing of a row is redundant with iloc.
+> >    - births_df[:4] slices from the first row to the fourth:
+> >    ![Slice To 4](/assets/img/four-slice.png)
+> >    - births_df[:-1] provides everything except the final row of the DataFrame.
+> >     You can use negative index numbers to count backwards from the last entry.
+> > 2. 
+> >    - births_df.iloc[0:1] returns the first row
+> >    - births_df.iloc[0] returns the first row as a named list
+> >    - births_df.iloc[:4, :] returns all columns of the first four rows
+> >    - births_df.iloc[0:4, 1:4] selects specified columns of the first four rows
+> >    - births_df.loc[0:4, 1:4] results in a 'TypeError' - see below.
+> > 3. While iloc uses integers as indices and slices accordingly, loc works with labels.
+> >    It is like accessing values from a dictionary, asking for the key names. 
+> >    Column names 1:4 do not exist, so the call to loc above results in an error. 
+> >    Check also the difference between births_df.loc[0:4] and births_df.iloc[0:4].
+> > 
+> {: .solution}
+{: .challenge}
 
-1. What happens when you execute:
-   - surveys_df[0:1]
-   - surveys_df[0]
-   - surveys_df[:4]
-   - surveys_df[:-1]
-2. What happens when you call:
-   - surveys_df.iloc[0:1]
-   - surveys_df.iloc[0]
-   - surveys_df.iloc[:4, :]
-   - surveys_df.iloc[0:4, 1:4]
-   - surveys_df.loc[0:4, 1:4]
-3. How are the last two commands different?
-  
-::::::::::::::::::::::: solution
-
-### Selection Challenges
-
-1. 
-   - surveys_df[0:3] returns the first three rows of the DataFrame:
-   
-   ```output
-         record_id  month  day  year  plot_id species_id sex  hindfoot_length  weight
-   0          1      7   16  1977        2         NL   M             32.0     NaN
-   1          2      7   16  1977        3         NL   M             33.0     NaN
-   2          3      7   16  1977        2         DM   F             37.0     NaN
-   ```
-
-   - surveys_df[0] results in a 'KeyError', since direct indexing of a row is redundant with iloc.
-   - surveys_df[0:1] can be used to obtain only the first row.
-   - surveys_df[:5] slices from the first row to the fifth:
-  
-   ```output
-      record_id  month  day  year  plot_id species_id sex  hindfoot_length  weight
-   0          1      7   16  1977        2         NL   M             32.0     NaN
-   1          2      7   16  1977        3         NL   M             33.0     NaN
-   2          3      7   16  1977        2         DM   F             37.0     NaN
-   3          4      7   16  1977        7         DM   M             36.0     NaN
-   4          5      7   16  1977        3         DM   M             35.0     NaN
-   ```
-   - surveys_df[:-1] provides everything except the final row of the DataFrame.
-    You can use negative index numbers to count backwards from the last entry.
-2. 
-   - surveys_df.iloc[0:1] returns the first row
-   - surveys_df.iloc[0] returns the first row as a named list
-   - surveys_df.iloc[:4, :] returns all columns of the first four rows
-   - surveys_df.iloc[0:4, 1:4] selects specified columns of the first four rows
-   - surveys_df.loc[0:4, 1:4] results in a 'TypeError' - see below.
-3. While iloc uses integers as indices and slices accordingly, loc works with labels.
-   It is like accessing values from a dictionary, asking for the key names. 
-   Column names 1:4 do not exist, so the call to loc above results in an error. 
-   Check also the difference between surveys_df.loc[0:4] and surveys_df.iloc[0:4].
-
-::::::::::::::::::::::::::::::::
-
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Subsetting Data using Criteria
 
@@ -460,38 +435,24 @@ We can also select a subset of our data using criteria. For example, we can
 select all rows that have a year value of 2002:
 
 ```python
-surveys_df[surveys_df.year == 2002]
+births_df[births_df.year == 2002]
 ```
 
 Which produces the following output:
 
-```python
-record_id  month  day  year  plot_id species_id  sex  hindfoot_length  weight
-33320      33321      1   12  2002        1         DM    M     38      44
-33321      33322      1   12  2002        1         DO    M     37      58
-33322      33323      1   12  2002        1         PB    M     28      45
-33323      33324      1   12  2002        1         AB  NaN    NaN     NaN
-33324      33325      1   12  2002        1         DO    M     35      29
-...
-35544      35545     12   31  2002       15         AH  NaN    NaN     NaN
-35545      35546     12   31  2002       15         AH  NaN    NaN     NaN
-35546      35547     12   31  2002       10         RM    F     15      14
-35547      35548     12   31  2002        7         DO    M     36      51
-35548      35549     12   31  2002        5        NaN  NaN    NaN     NaN
+![2002 Data](/assets/img/2002-data.png)
 
-[2229 rows x 9 columns]
-```
 
 Or we can select all rows that do not contain the year 2002:
 
 ```python
-surveys_df[surveys_df.year != 2002]
+births_df[births_df.year != 2002]
 ```
 
 We can define sets of criteria too:
 
 ```python
-surveys_df[(surveys_df.year >= 1980) & (surveys_df.year <= 1985)]
+births_df[(births_df.year >= 1980) & (births_df.year <= 1985)]
 ```
 
 ### Python Syntax Cheat Sheet
@@ -506,110 +467,62 @@ Experiment with selecting various subsets of the "surveys" data.
 - Greater than or equal to: >=
 - Less than or equal to: <=
 
-:::::::::::::::::::::::::::::::::::::::  challenge
 
-## Challenge - Queries
 
-1. Select a subset of rows in the surveys_df DataFrame that contain 
-   data from the year 1999 and that contain weight values less than or equal to 8.
-   How many rows did you end up with? What did your neighbor get?
-2. You can use the isin command in Python to query a DataFrame based upon 
-   a list of values as follows:
-   
-   ```python 
-   surveys_df[surveys_df['species_id'].isin([listGoesHere])]
-   ```
-   
-   Use the isin function to find all plots that contain particular species
-   in the "surveys" DataFrame. How many records contain these values?
-3. Experiment with other queries. 
-   Create a query that finds all rows with 
-   a weight value greater than or equal to 0.
-4. The ~ symbol in Python can be used to return the OPPOSITE of the
-   selection that you specify.
-   It is equivalent to **is not in**.
-   Write a query that selects all rows with sex NOT equal to 'M' or 'F' in the "surveys" data.
+> ## Challenge - Queries
+> 
+> 1. Select a subset of rows in the births_df DataFrame that contain 
+>    data from the February 2012
+>    How many rows did you end up with? What did your neighbor get?
+> 2. Experiment with other queries. 
+>    Create a query that finds all rows with 
+>    a births value greater than or equal to 10,000.
+> 3. The ~ symbol in Python can be used to return the OPPOSITE of the
+>    selection that you specify.
+>    It is equivalent to **is not in**.
+>    Write a query that selects all rows with date_of_week NOT equal to 1-5 in the data.
+> 
+> > ## Solution
+> > 
+> > 1:
+> >    ```python
+> >    births_df[(births_df["year"] == 2012) & (births_df["month"] == 2)]
+> >    ```
+> > ![Feb 2012 Data](/assets/img/feb-2012-data.png)
+> > 
+> >    If you are only interested in how many rows meet the criteria, 
+> >    the sum of True values could be used instead:
+> >    
+> >    ```python
+> >    sum((births_df["year"] == 2012) & (births_df["month"] == 2))
+> >    ```
+> >    
+> >    ```output
+> >    29
+> >    ```
+> > 2: births_df[births_df["births"] >= 10000]
+> > 
+> > 3: 
+> >    ```python
+> >    births_df[~births_df["day_of_week"].isin([1, 2, 3, 4, 5])]
+> >    ```
+> > ![1-5 Weekday Data](/assets/img/no-weekend-data.png)
+> > 
+> {: .solution}
+{: .challenge}
 
-::::::::::::::::::::::: solution
 
-1. 
-   ```python
-   surveys_df[(surveys_df["year"] == 1999) & (surveys_df["weight"] <= 8)]
-   ```
-   
-   ```output
-          record_id  month  day  year  plot_id species_id sex  hindfoot_length  weight
-   29082      29083      1   16  1999       21         RM   M             16.0     8.0
-   29196      29197      2   20  1999       18         RM   M             18.0     8.0
-   29421      29422      3   15  1999       16         RM   M             15.0     8.0
-   29903      29904     10   10  1999        4         PP   M             20.0     7.0
-   29905      29906     10   10  1999        4         PP   M             21.0     4.0
-   ```
-   
-   If you are only interested in how many rows meet the criteria, 
-   the sum of True values could be used instead:
-   
-   ```python
-   sum((surveys_df["year"] == 1999) & (surveys_df["weight"] <= 8))
-   ```
-   
-   ```output
-   5
-   ```
-2. For example, using PB and PL:
-   
-   ```python
-   surveys_df[surveys_df['species_id'].isin(['PB', 'PL'])]['plot_id'].unique()
-   ``` 
-   
-   ```output
-   array([ 1, 10,  6, 24,  2, 23, 19, 12, 20, 22,  3,  9, 14, 13, 21,  7, 11,
-      15,  4, 16, 17,  8, 18,  5])
-   ```
-   
-   ```python
-   surveys_df[surveys_df['species_id'].isin(['PB', 'PL'])]['plot_id'].unique().shape
-   ```
-   
-   ```output
-   (24,)
-   ```
-3. surveys_df[surveys_df["weight"] >= 0]
-4. 
-   ```python
-   surveys_df[~surveys_df["sex"].isin(['M', 'F'])]
-   ```
-   
-   ```output
-          record_id  month  day  year  plot_id species_id  sex  hindfoot_length  weight
-   13            14      7   16  1977        8         DM  NaN              NaN     NaN
-   18            19      7   16  1977        4         PF  NaN              NaN     NaN
-   33            34      7   17  1977       17         DM  NaN              NaN     NaN
-   56            57      7   18  1977       22         DM  NaN              NaN     NaN
-   76            77      8   19  1977        4         SS  NaN              NaN     NaN
-   ...          ...    ...  ...   ...      ...        ...  ...              ...     ...
-   35527      35528     12   31  2002       13         US  NaN              NaN     NaN
-   35543      35544     12   31  2002       15         US  NaN              NaN     NaN
-   35544      35545     12   31  2002       15         AH  NaN              NaN     NaN
-   35545      35546     12   31  2002       15         AH  NaN              NaN     NaN
-   35548      35549     12   31  2002        5        NaN  NaN              NaN     NaN
-   
-   [2511 rows x 9 columns]
-   ```
+> ## Instructor Note:
+>
+> When working through the solutions to the challenges above,
+> you could introduce already that all these slice operations are actually based on a
+> *Boolean indexing* operation (next section in the lesson).
+> The filter provides for each record if it satisfies (True) or not (False).
+> The slicing itself interprets the True/False of each record.
+> 
+> {: .source}
+{: .callout}
 
-::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::: instructor
-
-When working through the solutions to the challenges above,
-you could introduce already that all these slice operations are actually based on a
-*Boolean indexing* operation (next section in the lesson).
-The filter provides for each record if it satisfies (True) or not (False).
-The slicing itself interprets the True/False of each record.
-
-::::::::::::::::::::::::::::::::::
 
 ## Using masks to identify a specific condition
 
@@ -648,28 +561,20 @@ The isnull method will compare each cell with a null value. If an element
 has a null value, it will be assigned a value of True in the output object.
 
 ```python
-pd.isnull(surveys_df)
+pd.isnull(births_df)
 ```
 
 A snippet of the output is below:
+> > ![All False](/assets/img/all-false.png)
 
-```python
-      record_id  month    day   year plot_id species_id    sex  hindfoot_length weight
-0         False  False  False  False   False      False  False   False      True
-1         False  False  False  False   False      False  False   False      True
-2         False  False  False  False   False      False  False   False      True
-3         False  False  False  False   False      False  False   False      True
-4         False  False  False  False   False      False  False   False      True
 
-[35549 rows x 9 columns]
-```
 
 To select the rows where there are null values, we can use
 the mask as an index to subset our data as follows:
 
 ```python
 # To select just the rows with NaN values, we can use the 'any()' method
-surveys_df[pd.isnull(surveys_df).any(axis=1)]
+births_df[pd.isnull(births_df).any(axis=1)]
 ```
 
 Note that the weight column of our DataFrame contains many null or NaN
@@ -679,79 +584,75 @@ We can run isnull on a particular column too. What does the code below do?
 
 ```python
 # What does this do?
-empty_weights = surveys_df[pd.isnull(surveys_df['weight'])]['weight']
+empty_weights = births_df[pd.isnull(births_df['weight'])]['weight']
 print(empty_weights)
 ```
 
 Let's take a minute to look at the statement above. We are using the Boolean
-object pd.isnull(surveys_df['weight']) as an index to surveys_df. We are
+object pd.isnull(births_df['weight']) as an index to births_df. We are
 asking Python to select rows that have a NaN value of weight.
 
-:::::::::::::::::::::::::::::::::::::::  challenge
+> ## Challenge - Putting It All Together
+> 
+> 1. Create a new DataFrame that only contains observations with day_of_week values that are **not** 1-7
+>    Print the number of rows in this new DataFrame.
+>    Verify the result by comparing the number of rows in the new DataFrame with
+>    the number of rows in the surveys DataFrame where day_of_week is null.
+> 2. Create a new DataFrame that contains only observations that are of day_of_week 6
+>    or 7 and where births values are greater than 10,000.
+>    Create a stacked bar plot of average weight by plot 
+>    with 6 vs 7 values stacked for each plot.
+> 
+> > ## Solution
+> > 
+> > 1:
+> >    ```python
+> >    new = births_df[~births_df['day_of_week'].isin([1, 2, 3, 4, 5, 6, 7])].copy()
+> >    print(len(new))
+> >    ```
+> >    
+> >    ```output
+> >    0
+> >    ```
+> >    
+> >    ```python
+> >    sum(births_df['day_of_week'].isnull()) == len(new)
+> >    ```
+> >    
+> >    ```output
+> >    True
+> >    ```
+> > 
+> > 2: 
+> >    ```python
+> >    # selection of the data with isin
+> >    stack_selection = births_df[(births_df['day_of_week'].isin([6, 7])) & (births_df['births'] > 10000)]
+> > 
+> >    # calculate the mean weight for each plot id and sex combination:
+> >    stack_selection = stack_selection.groupby(["month", "day_of_week"]).mean().unstack()
+> >    # and we can make a stacked bar plot from this:
+> >    stack_selection.plot(kind='bar', stacked=True)
+> >    ```
+> > 
+> {: .solution}
+{: .challenge}
 
-## Challenge - Putting it all together
 
-1. Create a new DataFrame that only contains observations with sex values that
-   are **not** female or male.
-   Print the number of rows in this new DataFrame.
-   Verify the result by comparing the number of rows in the new DataFrame with
-   the number of rows in the surveys DataFrame where sex is null.
-2. Create a new DataFrame that contains only observations that are of sex male
-   or female and where weight values are greater than 0.
-   Create a stacked bar plot of average weight by plot 
-   with male vs female values stacked for each plot.
-
-::::::::::::::::::::::: solution
-
-1. 
-   ```python
-   new = surveys_df[~surveys_df['sex'].isin(['M', 'F'])].copy()
-   print(len(new))
-   ```
-   
-   ```output
-   2511
-   ```
-   
-   ```python
-   sum(surveys_df['sex'].isnull()) == len(new)
-   ```
-   
-   ```output
-   True
-   ```
-2. 
-   ```python
-   # selection of the data with isin
-   stack_selection = surveys_df[(surveys_df['sex'].isin(['M', 'F'])) &
-                 surveys_df["weight"] > 0.][["sex", "weight", "plot_id"]]
-   # calculate the mean weight for each plot id and sex combination:
-   stack_selection = stack_selection.groupby(["plot_id", "sex"]).mean().unstack()
-   # and we can make a stacked bar plot from this:
-   stack_selection.plot(kind='bar', stacked=True)
-   ```
-
-::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-> ## Instructor
+> ## Instructor Note:
 >
 > Referring to the challenge solution above,
 > as we know the other values are all Nan values, we could also select all not null
-values:
->```python
-stack_selection = surveys_df[(surveys_df['sex'].notnull()) &
-          surveys_df["weight"] > 0.][["sex", "weight", "plot_id"]]
-```
-> ![](fig/02_chall_stack_levelissue.png){alt='average weight for each plot per sex'}
+> values:
+> ```python
+> stack_selection = births_df[(births_df['sex'].notnull()) &
+>           births_df["weight"] > 0.][["sex", "weight", "plot_id"]]
+> ```
 > However, due to the unstack command, the legend header contains two levels.
 >In order to remove this, the column naming needs to be simplified:
-
+> 
 > ```python
 stack_selection.columns = stack_selection.columns.droplevel()
-```
-> ![](fig/02_chall_stack_level.png){alt='average weight for each plot per sex'}
+> ```
 > This is just a preview, more in next episode.
 > 
 > {: .source}

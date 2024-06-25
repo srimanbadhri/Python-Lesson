@@ -62,29 +62,12 @@ year,month,date_of_month,day_of_week,births
 | --------------- | ----------------------------- |
 | year            | year of observation           | 
 | month           | month of observation          | 
-| day\_of\_month  | day of observation            | 
+| date\_of\_month  | day of observation           | 
 | day\_of\_week   | weekday of observation        | 
-| births          | # of births in that year      | 
+| births          | # of births in that day       | 
 
 The first few rows of our first file look like this:
-
-```output
-year,month,date_of_month,day_of_week,births
-2000,1,1,6,9083
-2000,1,2,7,8006
-2000,1,3,1,11363
-2000,1,4,2,13032
-2000,1,5,3,12558
-2000,1,6,4,12466
-2000,1,7,5,12516
-2000,1,8,6,8934
-2000,1,9,7,7949
-2000,1,10,1,11668
-2000,1,11,2,12611
-2000,1,12,3,12398
-2000,1,13,4,11815
-2000,1,14,5,12180
-```
+![First Few Rows](/assets/img/first-few-rows.png)
 
 ***
 
@@ -147,23 +130,10 @@ pd.read_csv("data/US_births_2000-2014_SSA.csv")
 
 The above command yields the **output** below:
 
-```output
-year	month	date_of_month	day_of_week	births
-0	2000	1	 1	6	9083
-1	2000	1	 2	7	8006
-2	2000	1	 3	1	11363
-3	2000	1	 4	2	13032
-4	2000	1	 5	3	12558
-...	...	...	...	...	...
-5474	2014	12	27	6	8656
-5475	2014	12	28	7	7724
-5476	2014	12	29	1	12811
-5477	2014	12	30	2	13634
-5478	2014	12	31	3	11990
-5479 rows × 5 columns
-```
+![Read CSV](/assets/img/read-csv.png)
 
-We can see that there were 35,549 rows parsed. Each row has 9
+
+We can see that there were 5,479 rows parsed. Each row has 6
 columns. The first column is the index of the DataFrame. The index is used to
 identify the position of the data, but it is not an actual column of the DataFrame.
 It looks like  the read_csv function in Pandas  read our file properly. However,
@@ -171,69 +141,44 @@ we haven't saved any data to memory so we can work with it. We need to assign th
 DataFrame to a variable. Remember that a variable is a name for a value, such as x,
 or  data. We can create a new  object with a variable name by assigning a value to it using =.
 
-Let's call the imported survey data surveys_df:
+Let's call the imported data births_df:
 
 ```python
-surveys_df = pd.read_csv("data/US_births_2000-2014_SSA.csv")
+births_df = pd.read_csv("data/US_births_2000-2014_SSA.csv")
 ```
 
 Note that Python does not produce any output on the screen  when you assign the imported DataFrame to a variable.
-We can view the value of the surveys_df
+We can view the value of the births_df
 object by typing its name into the Python command prompt.
 
 ```python
-surveys_df
+births_df
 ```
 
 which prints contents like above.
 
 Note: if the output is too wide to print on your narrow terminal window, you may see something
-slightly different as the large set of data scrolls past. You may see simply the last column
-of data:
-
-```output
-year	month	date_of_month	day_of_week	births
-0	2000	1	1	6	9083
-1	2000	1	2	7	8006
-2	2000	1	3	1	11363
-3	2000	1	4	2	13032
-4	2000	1	5	3	12558
-...	...	...	...	...	...
-5474	2014	12	27	6	8656
-5475	2014	12	28	7	7724
-5476	2014	12	29	1	12811
-5477	2014	12	30	2	13634
-5478	2014	12	31	3	11990
-5479 rows × 5 columns
-```
-
+slightly different as the large set of data scrolls past. 
 Don't worry: all the data is there! You can confirm this by scrolling upwards, or by
 looking at the [# of rows x # of columns] block at the end of the output.
 
-You can also use surveys_df.head() to view only the first few rows of the dataset in an output
+You can also use births_df.head() to view only the first few rows of the dataset in an output
 that is easier to fit in one window. After doing this, you can see that pandas has neatly formatted
 the data to fit our screen:
 
 ```python
-surveys_df.head() # The head() method displays the first several lines of a file. It
+births_df.head() # The head() method displays the first several lines of a file. It
                   # is discussed below.
 ```
 
-```output
-year	month	date_of_month	day_of_week	births
-0	2000	1	1	6	9083
-1	2000	1	2	7	8006
-2	2000	1	3	1	11363
-3	2000	1	4	2	13032
-4	2000	1	5	3	12558
-```
+![Survey DF Head](/assets/img/df-head.png)
 
 ### Exploring Our Species Survey Data
 
-Again, we can use the type function to see what kind of thing surveys_df is:
+Again, we can use the type function to see what kind of thing births_df is:
 
 ```python
-type(surveys_df)
+type(births_df)
 ```
 
 ```output
@@ -243,11 +188,11 @@ type(surveys_df)
 As expected, it's a DataFrame (or, to use the full name that Python uses to refer
 to it internally, a pandas.core.frame.DataFrame).
 
-What kind of things does surveys_df contain? DataFrames have an attribute
+What kind of things does births_df contain? DataFrames have an attribute
 called dtypes that answers this:
 
 ```python
-surveys_df.dtypes
+births_df.dtypes
 ```
 
 ```output
@@ -275,13 +220,13 @@ using **attributes** and **methods** provided by the DataFrame object.
 Attributes are features of an object. For example, the shape attribute will output
 the size (the number of rows and columns) of an object. To access an attribute,
 use the DataFrame object name followed by the attribute name df_object.attribute.
-For example, using the DataFrame surveys_df and attribute columns, an index
-of all the column names in the DataFrame can be accessed with surveys_df.columns.
+For example, using the DataFrame births_df and attribute columns, an index
+of all the column names in the DataFrame can be accessed with births_df.columns.
 
 Methods are like functions, but they only work on particular kinds of objects. As
 an example, **the head() method** works on DataFrames. Methods are called in a
 similar fashion to attributes, using the syntax df_object.method(). Using
-surveys_df.head() gets the first few rows in the DataFrame surveys_df
+births_df.head() gets the first few rows in the DataFrame births_df
 using the head() method. With a method, we can supply extra information
 in the parentheses to control behaviour.
 
@@ -292,20 +237,20 @@ Let's look at the data using these.
 
 > ## Challenge - DataFrames
 >
-> Using our DataFrame surveys_df, try out the **attributes** & **methods** below to see
+> Using our DataFrame births_df, try out the **attributes** & **methods** below to see
 what they return.
-> 1. surveys_df.columns
-> 2. surveys_df.shape Take note of the output of shape - what format does it return the shape of the DataFrame in? HINT: [More on tuples, here](https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences).
-> 3. surveys_df.head() Also, what does surveys_df.head(15) do?
-> 4. surveys_df.tail()
+> 1. births_df.columns
+> 2. births_df.shape Take note of the output of shape - what format does it return the shape of the DataFrame in? HINT: [More on tuples, here](https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences).
+> 3. births_df.head() Also, what does births_df.head(15) do?
+> 4. births_df.tail()
 > 
 >
 > > ## Solution
 > >
-> > 1. surveys_df.columns provides the names of the columns in the DataFrame.
-> > 2. surveys_df.shape provides the dimensions of the DataFrame as a tuple in (r,c) format, where r is the number of rows and c the number of columns.
-> > 3. surveys_df.head() returns the first 5 lines of the DataFrame,  annotated with column and row labels. Adding an integer as an argument to the functionspecifies the number of lines to display from the top of the DataFrame, e.g. surveys_df.head(15) will return the first 15 lines.
-> > 4. surveys_df.tail() will display the last 5 lines, 
+> > 1. births_df.columns provides the names of the columns in the DataFrame.
+> > 2. births_df.shape provides the dimensions of the DataFrame as a tuple in (r,c) format, where r is the number of rows and c the number of columns.
+> > 3. births_df.head() returns the first 5 lines of the DataFrame,  annotated with column and row labels. Adding an integer as an argument to the functionspecifies the number of lines to display from the top of the DataFrame, e.g. births_df.head(15) will return the first 15 lines.
+> > 4. births_df.tail() will display the last 5 lines, 
    and behaves similarly to the head() method.
 > > 
 > {: .solution}
@@ -313,16 +258,16 @@ what they return.
 
 
 
-> ## Instructor: Recapping object (im)mutability
+> ## Instructor Note: Recapping object (im)mutability
 > Working through solutions to the challenge above
 can provide a good opportunity to recap about mutability and immutability
 of different objects.
 > Show that the DataFrame index
 ( the columns attribute) is immutable, e.g. 
-surveys_df.columns[4] = "plotid" returns a TypeError.
+births_df.columns[4] = "dateofmonth" returns a TypeError.
 > Adapting the name is done with the rename function:
 > ```python
-> surveys_df.rename(columns={"plot_id": "plotid"}))
+> births_df.rename(columns={"date_of_month": "dateofmonth"}))
 > ```
 > {: .source}
 {: .callout}
@@ -340,7 +285,7 @@ Let's begin by exploring our data:
 
 ```python
 # Look at the column names
-surveys_df.columns
+births_df.columns
 ```
 
 which **returns**:
@@ -354,7 +299,7 @@ Let's get a list of all the years. The pd.unique function tells us all of
 the unique values in the year column.
 
 ```python
-pd.unique(surveys_df['year'])
+pd.unique(births_df['year'])
 ```
 
 which **returns**:
@@ -368,18 +313,22 @@ array([2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
 
 > ## Challenge - Statistics
 > 
-> 1. Create a list of unique site IDs ("plot\_id") found in the surveys data. Call it site_names. How many unique sites are there in the data? How many unique species are in the data?
-> 2. What is the difference between len(site_names) and surveys_df['plot_id'].nunique()?
+> 1. Create a list of unique month dates ("date\_of\_month") found in the surveys data. Call it month_dates. How many unique month dates are there in the data? How many unique weekdays are in the data?
+> 2. What is the difference between len(month_dates) and births_df['date_of_month'].nunique()?
+>
 > > ## Solution
-> > 1. site_names = pd.unique(surveys_df["plot_id"])
+> > 1. month_dates = pd.unique(births_df["date_of_month"])
 > > - How many unique sites are in the data?  
-> > site_names.size or len(site_names) provide the answer: 24
-> > - How many unique species are in the data?
-> > len(pd.unique(surveys_df["species_id"])) tells us there are 49 species
-> > 2. len(site_names) and surveys_df['plot_id'].nunique() 
+> > month_dates.size or len(month_dates) provide the answer: 31
+> > - How many unique weekdays are in the data?
+> > len(pd.unique(births_df["day_of_week"])) tells us there are 7
+> > weekdays
+> > 2. len(month_dates) and births_df['day_of_month'].nunique() 
 > > both provide the same output: 
 > > they are alternative ways of getting the unique values.
-> > The nunique method combines the count and unique value extraction, and can help avoid the creation of intermediate variables like site_names.
+> > The nunique method combines the count and unique value extraction,
+> > and can help avoid the creation of intermediate variables like 
+> > month_dates.
 > >
 > {: .solution}
 {: .challenge}
@@ -395,7 +344,7 @@ We can calculate basic statistics for all records in a single column using the
 syntax below:
 
 ```python
-surveys_df['births'].describe()
+births_df['births'].describe()
 ```
 
 gives **output**
@@ -413,18 +362,18 @@ Name: births, dtype: float64
 ```
 
 > ## Instructor: Important Bug Note
-> In pandas prior to version 0.18.1 there is a bug causing surveys_df['weight'].describe() to return a runtime error.
+> In pandas prior to version 0.18.1 there is a bug causing births_df['weight'].describe() to return a runtime error.
 > {: .source}
 {: .callout}
 
 We can also extract one specific metric if we wish:
 
 ```python
-surveys_df['births'].min()
-surveys_df['births'].max()
-surveys_df['births'].mean()
-surveys_df['births'].std()
-surveys_df['births'].count()
+births_df['births'].min()
+births_df['births'].max()
+births_df['births'].mean()
+births_df['births'].std()
+births_df['births'].count()
 ```
 
 But if we want to summarize by one or more variables, for example year, we can
@@ -433,7 +382,7 @@ can quickly calculate summary statistics by a group of our choice.
 
 ```python
 # Group data by year
-grouped_data = surveys_df.groupby('year')
+grouped_data = births_df.groupby('year')
 ```
 
 The **pandas function describe** will return descriptive stats including: mean,
@@ -450,82 +399,34 @@ grouped_data.mean(numeric_only=True)
 
 grouped_data.mean(numeric_only=True) **OUTPUT:**
 
-```output
-year month	date_of_month	day_of_week	births
-2000	6.513661	15.756831	4.013661	11337.699454
-2001	6.526027	15.720548	3.991781	11262.912329
-2002	6.526027	15.720548	3.994521	11230.994521
-2003	6.526027	15.720548	3.997260	11405.643836
-2004	6.513661	15.756831	4.002732	11439.516393
-2005	6.526027	15.720548	4.005479	11539.564384
-2006	6.526027	15.720548	4.008219	11877.134247
-2007	6.526027	15.720548	3.991781	12002.147945
-2008	6.513661	15.756831	3.991803	11777.969945
-2009	6.526027	15.720548	4.000000	11482.167123
-2010	6.526027	15.720548	4.002740	11112.260274
-2011	6.526027	15.720548	4.005479	10977.830137
-2012	6.513661	15.756831	4.000000	10931.333333
-2013	6.526027	15.720548	3.994521	10885.854795
-2014	6.526027	15.720548	3.997260	10987.758904
-```
+![Group By Year](/assets/img/group-by-year.png)
 
 The groupby command is powerful in that it allows us to quickly generate
 summary stats.
 
 
+
+
+
 > ## Challenge - Summary Data
 > 
-> 1. How many recorded individuals are female F and how many male M?
-> 2. What happens when you group by two columns using the following syntax and then calculate mean values?
-> - grouped_data2 = surveys_df.groupby(['plot_id', 'sex'])
-- grouped_data2.mean(numeric_only=True)
-> 3. Summarize weight values for each site in your data. HINT: you can use the following syntax to only create summary statistics for one column in your data.
-> by_site['weight'].describe()
+> 1. What happens when you group by two columns using the following syntax and then calculate mean values?
+> - grouped_data2 = births_df.groupby(['year', 'month'])
+> - grouped_data2.mean(numeric_only=True)
+> 2. Summarize month values for each year in your data.
 >
 > > ## Solution
-> > 1. The first column of output from grouped_data.describe() (count)  tells us that the data contains 15690 records for female individuals and 17348 records for male individuals.
-> > - Note that these two numbers do not sum to 35549, the total number of rows we know to be in the surveys_df DataFrame. Why do you think some records were excluded from the grouping?
-> > 2. Calling the mean() method on data grouped by these two columns  calculates and returns the mean value for each combination of plot and sex. 
-> > - Note that the mean is not meaningful for some variables,
-     e.g. day, month, and year. You can specify particular columns and particular summary statistics using the agg() method (short for _aggregate_), e.g. to obtain the last survey year, median foot-length and mean weight for each plot/sex combination:
-> > ```python
-surveys_df.groupby(['plot_id', 'sex']).agg({"year": 'max',
-                                           "hindfoot_length": 'median',
-                                           "weight": 'mean'})
-> > ```
-> > 3. surveys_df.groupby(['plot_id'])['weight'].describe()
-> > ```output
-          count       mean        std  min   25%   50%   75%    max
-plot_id                                                            
-1        1903.0  51.822911  38.176670  4.0  30.0  44.0  53.0  231.0
-2        2074.0  52.251688  46.503602  5.0  24.0  41.0  50.0  278.0
-3        1710.0  32.654386  35.641630  4.0  14.0  23.0  36.0  250.0
-4        1866.0  47.928189  32.886598  4.0  30.0  43.0  50.0  200.0
-5        1092.0  40.947802  34.086616  5.0  21.0  37.0  48.0  248.0
-6        1463.0  36.738893  30.648310  5.0  18.0  30.0  45.0  243.0
-7         638.0  20.663009  21.315325  4.0  11.0  17.0  23.0  235.0
-8        1781.0  47.758001  33.192194  5.0  26.0  44.0  51.0  178.0
-9        1811.0  51.432358  33.724726  6.0  36.0  45.0  50.0  275.0
-10        279.0  18.541219  20.290806  4.0  10.0  12.0  21.0  237.0
-11       1793.0  43.451757  28.975514  5.0  26.0  42.0  48.0  212.0
-12       2219.0  49.496169  41.630035  6.0  26.0  42.0  50.0  280.0
-13       1371.0  40.445660  34.042767  5.0  20.5  33.0  45.0  241.0
-14       1728.0  46.277199  27.570389  5.0  36.0  44.0  49.0  222.0
-15        869.0  27.042578  35.178142  4.0  11.0  18.0  26.0  259.0
-16        480.0  24.585417  17.682334  4.0  12.0  20.0  34.0  158.0
-17       1893.0  47.889593  35.802399  4.0  27.0  42.0  50.0  216.0
-18       1351.0  40.005922  38.480856  5.0  17.5  30.0  44.0  256.0
-19       1084.0  21.105166  13.269840  4.0  11.0  19.0  27.0  139.0
-20       1222.0  48.665303  50.111539  5.0  17.0  31.0  47.0  223.0
-21       1029.0  24.627794  21.199819  4.0  10.0  22.0  31.0  190.0
-22       1298.0  54.146379  38.743967  5.0  29.0  42.0  54.0  212.0
-23        369.0  19.634146  18.382678  4.0  10.0  14.0  23.0  199.0
-24        960.0  43.679167  45.936588  4.0  19.0  27.5  45.0  251.0
-> > ```
 > > 
+> > 1. Calling the mean() method on data grouped by these two columns  
+> > calculates and returns the mean value for each combination of plot 
+> > and sex. 
+> > - Note that the mean is not meaningful for some variables,
+> > e.g. day, month, and year. 
+> > 2. births_df.groupby(['year'])['month'].describe()
+> > ![Births By Year](/assets/img/births-by-year.png)
 > > 
 > {: .solution}
-{: .challenge
+{: .challenge}
 
 
 ## Quickly Creating Summary Counts in Pandas
@@ -534,35 +435,36 @@ Let's next count the number of samples for each species. We can do this in a few
 ways, but we'll use groupby combined with **a count() method**.
 
 ```python
-# Count the number of samples by species
-year_counts = surveys_df.groupby('year')['births'].count()
+# Count the number of births by year
+year_counts = births_df.groupby('year')['births'].count()
 print(year_counts)
 ```
 
 Or, we can also count just the rows that have the species "DO":
 
 ```python
-surveys_df.groupby('year')['births'].count()['1']
+births_df.groupby('year')['births'].count()['1']
 ```
 
 
 > ## Challenge - Make a list
 > 
-> What's another way to create a list of species and associated count of
-> the records in the data? Hint: you can perform count, min, etc.
+> What's another way to create a list of years and associated count of
+> the birth dates in the data? Hint: you can perform count, min, etc.
 > functions on groupby DataFrames in the same way you can perform them on
 > regular DataFrames.
 > > ## Solution
-> > As well as calling count() on the record_id column of the grouped
-> > DataFrame as above, an equivalent result can be obtained by extracting 
-> > record_id from the result of count() called directly on the grouped DataFrame:
+> > As well as calling count() on the births column of the grouped
+> > DataFrame as above, an equivalent result can be obtained by 
+> > extracting 
+> > births from the result of count() called directly on the grouped DataFrame:
 > {: .solution}
 {: .challenge}
 
 
 
 ```python
-surveys_df.groupby('species_id').count()['record_id']
+births_df.groupby('year').count()['births']
 ```
 
 ```output
@@ -593,7 +495,7 @@ on an entire column of our data. For example, let's multiply all weight values b
 
 ```python
 # Multiply all weight values by 2
-surveys_df['births']*2
+births_df['births']*2
 ```
 
 A more practical use of this might be to normalize the data according to a mean, area,
@@ -609,30 +511,33 @@ We can plot our summary stats using Pandas, too.
 # Create a quick bar chart
 year_counts.plot(kind='bar');
 ```
+![Year Chart](/assets/img/year-chart.png)
 
 ![](fig/countPerSpecies.png){alt='Weight by Species Site'}
 Count per species site
 
-We can also look at how many animals were captured in each site:
+We can also look at how many unique birth numbers were recorded
 
 ```python
-total_count = surveys_df.groupby('year')['births'].nunique()
+total_count = births_df.groupby('year')['births'].nunique()
 # Let's plot that too
 total_count.plot(kind='bar');
 ```
-
+![Unique Year Chart](/assets/img/year-chart-unique.png)
 
 > ## Challenge - Plots
 >
-> 1. Create a plot of average weight across all species per site.\
-> 2. Create a plot of total males versus total females for the entire dataset.
->
+> Create a plot of total births per day in February 2012.
 > > ## Solution
 > > 
-> > 1. surveys_df.groupby('plot_id').mean()["weight"].plot(kind='bar')
-> > ![](fig/01_chall_bar_meanweight.png){alt='average weight across all species for each plot'}
-> > 2. surveys_df.groupby('sex').count()["record_id"].plot(kind='bar')
-> > ![](fig/01_chall_bar_totalsex.png){alt='total males versus total females for the entire dataset'}
+> > ```python
+> > feb_2012 = births_df[(births_df['year'] == 2012) & (births_df['month'] == 2)]
+> > births_per_day = feb_2012.groupby('date_of_month')['births'].sum()
+> > births_per_day.plot(kind='bar');
+> > ```
+> >
+> > ![Feb 2012 Births](/assets/img/feb-2012-births.png)
+> > 
 > > 
 > {: .solution}
 {: .challenge}

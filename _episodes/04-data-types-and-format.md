@@ -73,27 +73,27 @@ is in the table below:
 
 Now that we're armed with a basic understanding of numeric and text data
 types, let's explore the format of our survey data. We'll be working with the
-same surveys.csv dataset that we've used in previous lessons.
+same dataset that we've used in previous lessons.
 
 ```python
 # Make sure pandas is loaded
 import pandas as pd
 
 # Note that pd.read_csv is used because we imported pandas as pd
-surveys_df = pd.read_csv("data/US_births_2000-2014_SSA.csv")
+births_df = pd.read_csv("data/US_births_2000-2014_SSA.csv")
 ```
 
 Remember that we can check the type of an object like this:
 
 ```python
-type(surveys_df)
+type(births_df)
 ```
 
 ```output
 pandas.core.frame.DataFrame
 ```
 
-Next, let's look at the structure of our surveys_df data. In pandas, we can check
+Next, let's look at the structure of our births_df data. In pandas, we can check
 the type of one column in a DataFrame using the syntax
 dataframe_name['column_name'].dtype:
 
@@ -101,7 +101,7 @@ dataframe_name['column_name'].dtype:
 (text).
 
 ```python
-surveys_df['record_id'].dtype
+births_df['year'].dtype
 ```
 
 ```output
@@ -113,28 +113,21 @@ as a 64 bit integer. We can use the dataframe_name.dtypes command to view the da
 for each column in a DataFrame (all at once).
 
 ```python
-surveys_df.dtypes
+births_df.dtypes
 ```
 
 which returns:
 
 ```python 
-record_id            int64
-month                int64
-day                  int64
-year                 int64
-plot_id              int64
-species_id          object
-sex                 object
-hindfoot_length    float64
-weight             float64
+year             int64
+month            int64
+date_of_month    int64
+day_of_week      int64
+births           int64
 dtype: object
 ```
 
-Note that most of the columns in our survey_df data are of type int64. This means
-that they are 64 bit integers. But the weight column is a floating point value
-which means it contains decimals. The species_id and sex columns are objects which
-means they contain strings.
+Note that most of the columns in our births_df data are of type int64. This means that they are 64 bit integers.
 
 ## Working With Integers and Floats
 
@@ -204,200 +197,75 @@ float(b)
 7.0
 ```
 
-## Working With Our Survey Data
+## Working With Our Births Data
 
 Getting back to our data, we can modify the format of values within our data, if
-we want. For instance, we could convert the record_id field to floating point
+we want. For instance, we could convert the year field to floating point
 values.
 
 ```python
 # Convert the record_id field from an integer to a float
-surveys_df['births'] = surveys_df['births'].astype('float64')
-surveys_df['births'].dtype
+births_df['year'] = births_df['year'].astype('float64')
+births_df['year'].dtype
 ```
 
 ```output
 dtype('float64')
 ```
 
-:::::::::::::::::::::::::::::::::::::::  challenge
+> ## Challenge - Changing Types
+>
+> Try converting the column years to floats using
+>
+> ```python
+> births_df['births'].astype("float")
+> ```
+> 
+> Next try converting years to an integer.
+>
+> > ## Solution
+> > 
+> > ```python
+> > births_df['births'].astype("float")
+> > ```
+> > 
+> > ```output
+> > 0        9083.0
+> > 1        8006.0
+> > 2       11363.0
+> > 3       13032.0
+> > 4       12558.0
+> >          ...   
+> > 5474     8656.0
+> > 5475     7724.0
+> > 5476    12811.0
+> > 5477    13634.0
+> > 5478    11990.0
+> > Name: births, Length: 5479, dtype: float64
+> > ```
+> > 
+> > ```python
+> > births_df['births'].astype("int")
+> > ```
+> > 
+> > ```output
+> > 0        9083
+> > 1        8006
+> > 2       11363
+> > 3       13032
+> > 4       12558
+> >         ...  
+> > 5474     8656
+> > 5475     7724
+> > 5476    12811
+> > 5477    13634
+> > 5478    11990
+> > Name: births, Length: 5479, dtype: int64
+> > ```
+> > 
+> {: .solution}
+{: .challenge}
 
-## Changing Types
-
-Try converting the column births to floats using
-
-```python
-surveys_df['births'].astype("float")
-```
-
-Next try converting births to an integer. What goes wrong here? What is pandas telling you?
-We will talk about some solutions to this later.
-
-::::::::::::::::::::::: solution
-
-```python
-surveys_df['births'].astype("float")
-```
-
-```output
-0         2.0
-1         3.0
-2         2.0
-3         7.0
-4         3.0
-         ... 
-35544    15.0
-35545    15.0
-35546    10.0
-35547     7.0
-35548     5.0
-```
-
-```python
-surveys_df['births'].astype("int")
-```
-
-```error
-pandas.errors.IntCastingNaNError: Cannot convert non-finite values (NA or inf) to integer
-```
-
-Pandas cannot convert types from float to int if the column contains NaN values.
-
-::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-## Missing Data Values - NaN
-
-What happened in the last challenge activity? Notice that this raises a casting error:
-pandas.errors.IntCastingNaNError: Cannot convert non-finite values (NA or inf) to integer (in older versions of pandas, this may be called a ValueError instead). If we look at the weight column in the surveys
-data we notice that there are NaN (**N**ot **a** **N**umber) values. **NaN** values are undefined
-values that cannot be represented mathematically. pandas, for example, will read
-an empty cell in a CSV or Excel sheet as NaN. NaNs have some desirable properties: if we
-were to average the weight column without replacing our NaNs, Python would know to skip
-over those cells.
-
-```python
-surveys_df['births'].mean()
-```
-
-```output
-42.672428212991356
-```
-
-Dealing with missing data values is always a challenge. It's sometimes hard to
-know why values are missing - was it because of a data entry error? Or data that
-someone was unable to collect? Should the value be 0? We need to know how
-missing values are represented in the dataset in order to make good decisions.
-If we're lucky, we have some metadata that will tell us more about how null
-values were handled.
-
-For instance, in some disciplines, like Remote Sensing, missing data values are
-often defined as -9999. Having a bunch of -9999 values in your data could really
-alter numeric calculations. Often in spreadsheets, cells are left empty where no
-data are available. pandas will, by default, replace those missing values with
-NaN. However, it is good practice to get in the habit of intentionally marking
-cells that have no data with a no data value! That way there are no questions
-in the future when you (or someone else) explores your data.
-
-### Where Are the NaN's?
-
-Let's explore the NaN values in our data a bit further. Using the tools we
-learned in lesson 02, we can figure out how many rows contain NaN values for
-births. We can also create a new subset from our data that only contains rows
-with births > 0 (i.e., select meaningful birth values):
-
-```python
-len(surveys_df[surveys_df['births'].isna()])
-# How many rows have weight values?
-len(surveys_df[surveys_df['births'] > 0])
-```
-
-We can replace all NaN values with zeroes using the .fillna() method (after
-making a copy of the data so we don't lose our work):
-
-```python
-df1 = surveys_df.copy()
-# Fill all NaN values with 0
-df1['births'] = df1['births'].fillna(0)
-```
-
-However NaN and 0 yield different analysis results. The mean value when NaN
-values are replaced with 0 is different from when NaN values are simply thrown
-out or ignored.
-
-```python
-df1['births'].mean()
-```
-
-```output
-38.751976145601844
-```
-
-We can fill NaN values with any value that we chose. The code below fills all
-NaN values with a mean for all weight values.
-
-```python
-df1['births'] = surveys_df['births'].fillna(surveys_df['births'].mean())
-```
-
-We could also chose to create a subset of our data, only keeping rows that do
-not contain NaN values.
-
-The point is to make conscious decisions about how to manage missing data. This
-is where we think about how our data will be used and how these values will
-impact the scientific conclusions made from the data.
-
-pandas gives us all of the tools that we need to account for these issues. We
-just need to be cautious about how the decisions that we make impact scientific
-results.
-
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-## Counting
-
-Count the number of missing values per column.
-
-:::::::::::::::  solution
-
-## Hints
-
-The method .count() gives you the number of non-NaN observations per column.
-Try looking to the .isna() method.
-
-::::::::::::::::::::::: solution
-
-```python
-for c in surveys_df.columns:
-    print(c, len(surveys_df[surveys_df[c].isna()]))
-```
-
-Or, since we've been using the pd.isnull function so far:
-
-```python
-for c in surveys_df.columns:
-    print(c, len(surveys_df[pd.isnull(surveys_df[c])]))
-```
-
-```output
-record_id 0
-month 0
-day 0
-year 0
-plot_id 0
-species_id 763
-sex 2511
-hindfoot_length 4111
-weight 3266
-```
-
-Note that isnull and isna are equivalent: they behave identically.
-
-::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Writing Out Data to CSV
 
@@ -407,18 +275,18 @@ in doing is working with only the columns that have full data. First, let's relo
 we're not mixing up all of our previous manipulations.
 
 ```python
-surveys_df = pd.read_csv("data/US_births_2000-2014_SSA.csv")
+births = pd.read_csv("data/US_births_2000-2014_SSA.csv")
 ```
 
 Next, let's drop all the rows that contain missing values. We will use the command dropna.
 By default, dropna removes rows that contain missing data for even just one column.
 
 ```python
-df_na = surveys_df.dropna()
+df_na = births_df.dropna()
 ```
 
-If you now type df_na, you should observe that the resulting DataFrame has 30676 rows
-and 9 columns, much smaller than the 35549 row original.
+If you now type df_na, you should observe that the resulting DataFrame has 5479 rows
+and 5 columns
 
 We can now use the to_csv command to export a DataFrame in CSV format. Note that the code
 below will by default save the data into the current working directory. We can
@@ -435,15 +303,16 @@ We will use this data file later in the workshop. Check out your working directo
 sure the CSV wrote out properly, and that you can open it! If you want, try to bring it
 back into Python to make sure it imports properly.
 
-::::::::::::::::::::::: instructor
 
-## Processed Data Checkpoint
+> ## Instructor Note - Processed Data Checkpoint:
+>
+> If learners have trouble generating the output, or anything happens with that, the folder
+> [sample_output](https://github.com/datacarpentry/python-ecology-lesson/tree/main/sample_output)
+> in this repository contains the file surveys_complete.csv with the data they should generate.
+> 
+> {: .source}
+{: .callout}
 
-If learners have trouble generating the output, or anything happens with that, the folder
-[sample_output](https://github.com/datacarpentry/python-ecology-lesson/tree/main/sample_output)
-in this repository contains the file surveys_complete.csv with the data they should generate.
-
-::::::::::::::::::::::::::::::::::
 
 ## Recap
 

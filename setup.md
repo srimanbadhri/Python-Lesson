@@ -94,6 +94,6 @@ wish to use a different browser, open this link: [http://localhost:8888](https:/
 For a brief introduction to Jupyter Notebooks, please consult our
 [Introduction to Jupyter Notebooks](jupyter_notebooks.md) page.
 
-[python] (https://www.python.org/)
-[anaconda] (https://www.anaconda.com/)
-[jupyter] (https://jupyter.org/)
+[Python](https://www.python.org/)
+[Anaconda](https://www.anaconda.com/)
+[Jupyter](https://jupyter.org/)

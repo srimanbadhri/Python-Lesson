@@ -73,7 +73,7 @@ Hello World
 One of the most basic things we can do in Python is assign values to variables:
 
 ```python
-text = "Data Carpentry"  # An example of assigning a value to a new text variable,
+text = "Computing Tools"  # An example of assigning a value to a new text variable,
                          # also known as a string data type in Python
 number = 42              # An example of assigning a numeric value, or an integer data type
 pi_value = 3.1415        # An example of assigning a floating point value (the float data type)
@@ -88,7 +88,7 @@ text
 ```
 
 ```output
-"Data Carpentry"
+"Computing Tools"
 ```
 
 Everything in Python has a type. To get the type of something, we can pass it
@@ -129,7 +129,7 @@ print(text)
 ```
 
 ```output
-Data Carpentry
+Computing Tools
 ```
 
 ```python
@@ -147,8 +147,8 @@ This may seem redundant, but in fact it's the only way to display output in a sc
 ```python
 # A Python script file
 # Comments in Python start with #
-# The next line assigns the string "Data Carpentry" to the variable "text".
-text = "Data Carpentry"
+# The next line assigns the string "Computing Tools" to the variable "text".
+text = "Computing Tools"
 
 # The next line does nothing!
 text
@@ -164,10 +164,10 @@ $ python example.py
 ```
 
 ```output
-Data Carpentry
+Computing Tools
 ```
 
-Notice that "Data Carpentry" is printed only once.
+Notice that "Computing Tools" is printed only once.
 
 **Tip**: print and type are built-in functions in Python. Later in this
 lesson, we will introduce methods and user-defined functions.
@@ -334,84 +334,74 @@ another_tuple = ('blue', 'green', 'red')
 a_list = [1, 2, 3]
 ```
 
-:::::::::::::::::::::::::::::::::::::::  challenge
 
-## Tuples *vs.* Lists
+> ## Challenge: Tuples *vs.* Lists
+>
+> 1. What happens when you execute a_list[1] = 5?
+> 2. What happens when you execute a_tuple[2] = 5?
+> 3. What does type(a_tuple) tell you about a_tuple?
+> 4. What information does the built-in function len() provide?
+>   Does it provide the same information on both tuples and lists?
+>   Does the help() function confirm this?
+>
+> > ## Solution
+> > 1: The second value in a_list is replaced with 5.
+> > 
+> > 2: 
+> > ```error
+> > TypeError: 'tuple' object does not support item assignment
+> > ```
+> > As a tuple is immutable, it does not support item assignment. 
+> > Elements in a list can be altered individually.
+> > 
+> > 3: 
+> > ```output
+> > <class 'tuple'>
+> > ```
+> > 
+> > The function tells you that the variable a_tuple is an object of the > > class tuple.
+> > 
+> > 4: 
+> > ```python
+> > len(a_list)
+> > ```
+> > 
+> > ```output
+> > 3
+> > ```
+> > 
+> > ```python
+> > len(a_tuple)
+> > ```
+> > 
+> > ```output
+> > 3
+> > ```
+> >
+> > len() tells us the length of an object.
+> > It works the same for both lists and tuples, 
+> > providing us with the number of entries in each case.
+> > 
+> > ```python
+> > help(len)
+> > ```
+> > 
+> > ```output
+> > Help on built-in function len in module builtins:
+> > 
+> > len(obj, /)
+> >   Return the number of items in a container.
+> > ```
+> > Lists and tuples are both types of container 
+> > i.e. objects that can contain multiple items,
+> > the key difference being that lists are mutable i.e.
+> > they can be modified after they have been created,
+> > while tuples are not: their value cannot be modified, only 
+> > overwritten.
+> > 
+> {: .solution}
+{: .challenge}
 
-1. What happens when you execute a_list[1] = 5?
-2. What happens when you execute a_tuple[2] = 5?
-3. What does type(a_tuple) tell you about a_tuple?
-4. What information does the built-in function len() provide?
-  Does it provide the same information on both tuples and lists?
-  Does the help() function confirm this?
-
-::::::::::::::::::::::::::: solution
-
-1. What happens when you execute a_list[1] = 5?
-
-The second value in a_list is replaced with 5.
-
-2. What happens when you execute a_tuple[2] = 5?
-
-```error
-TypeError: 'tuple' object does not support item assignment
-```
-
-As a tuple is immutable, it does not support item assignment. 
-Elements in a list can be altered individually.
-
-3. What does type(a_tuple) tell you about a_tuple?
-
-```output
-<class 'tuple'>
-```
-
-The function tells you that the variable a_tuple is an object of the class tuple.
-
-4. What information does the built-in function len() provide?
-  Does it provide the same information on both tuples and lists?
-  Does the help() function confirm this?
-
-```python
-len(a_list)
-```
-
-```output
-3
-```
-
-```python
-len(a_tuple)
-```
-
-```output
-3
-```
-
-len() tells us the length of an object.
-It works the same for both lists and tuples, 
-providing us with the number of entries in each case.
-
-```python
-help(len)
-```
-
-```output
-Help on built-in function len in module builtins:
-
-len(obj, /)
-    Return the number of items in a container.
-```
-
-Lists and tuples are both types of container 
-i.e. objects that can contain multiple items,
-the key difference being that lists are mutable i.e.
-they can be modified after they have been created,
-while tuples are not: their value cannot be modified, only overwritten.
-
-::::::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Dictionaries
 
@@ -476,60 +466,56 @@ for key in rev.keys():
 'third' -> three
 ```
 
-:::::::::::::::::::::::::::::::::::::::  challenge
+> ## Challenge: Changing Dictionaries
+>
+> 1. First, print the value of the rev dictionary to the screen.
+> 2. Reassign the value that corresponds to the key second so that it no > longer  reads "two" but instead 2.
+> 3. Print the value of rev to the screen again to see if the value has
+> changed.
+>
+>
+> > ## Solution
+> > 1.
+> > ```python
+> > print(rev)
+> > ```
+> >
+> > ```output
+> > {'first': 'one', 'second': 'two', 'third': 'three'}
+> > ```
+> > 
+> > 2 and 3.
+> > 
+> > ```python
+> > rev['second'] = 2
+> > print(rev)
+> > ```
+> > 
+> > ```output
+> > {'first': 'one', 'second': 2, 'third': 'three'}
+> > ```
+> > 
+> {: .solution}
+{: .challenge}
 
-## Changing dictionaries
 
-1. First, print the value of the rev dictionary to the screen.
-2. Reassign the value that corresponds to the key second so that it no longer
-  reads "two" but instead 2.
-3. Print the value of rev to the screen again to see if the value has changed.
-  
-::::::::::::::::::::::::::: solution
-
-1.
-
-```python
-print(rev)
-```
-
-```output
-{'first': 'one', 'second': 'two', 'third': 'three'}
-```
-
-2. and 3.
-
-```python
-rev['second'] = 2
-print(rev)
-```
-
-```output
-{'first': 'one', 'second': 2, 'third': 'three'}
-```
-
-::::::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::: instructor
-
-## Assigning to Dictionaries
-
-It can help to further demonstrate the freedom the user has to define
-values to keys in a dictionary, by showing another example with a value
-completely unrelated to the current contents of the dictionary, e.g.
-
-```python
-rev[2] = "apple-sauce"
-print(rev)
-```
-
-```output
-{1: 'one', 2: 'apple-sauce', 3: 'three'}
-```
-
-:::::::::::::::::::::::::::::::::::
+> ## Instructor Note: Assigning to Dictionaries
+>
+> It can help to further demonstrate the freedom the user has to define
+> values to keys in a dictionary, by showing another example with a value
+> completely unrelated to the current contents of the dictionary, e.g.
+>
+>```python
+> rev[2] = "apple-sauce"
+> print(rev)
+> ```
+> 
+> ```output
+> {1: 'one', 2: 'apple-sauce', 3: 'three'}
+> ```
+>
+> {: .source}
+{: .callout}
 
 ## Functions
 
