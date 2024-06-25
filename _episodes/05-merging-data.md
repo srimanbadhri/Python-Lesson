@@ -112,7 +112,6 @@ it imports properly.
 new_output = pd.read_csv('data/out.csv', keep_default_na=False, na_values=[""])
 ```
 
-:::::::::::::::::::::::::::::::::::::::  challenge
 
 > ## Challenge - Combine Data
 > Read the data from the two files,

@@ -185,10 +185,10 @@ births_dfl = pd.concat([old_births_df, new_births_df], axis=0)
 
 
 # Select only data for the year 2002
-births2002 = births_df[surveys_df.year == 2002]
+births2002 = births_df[births_df.year == 2002]
 
 # Write the new DataFrame to a CSV file
-births2002.to_csv('data/yearly_files/surveys2002.csv')
+births2002.to_csv('data/yearly_files/births2002.csv')
 ```
 
 To create yearly data files, we could repeat the last two commands over and
@@ -272,9 +272,9 @@ We can now add the rest of the steps we need to create separate text files:
 
 ```python
 # Load the data into a DataFrame
-surveys_df = pd.read_csv('data/births.csv')
+births_df = pd.read_csv('data/births.csv')
 
-for year in sbirths_df['year'].unique():
+for year in births_df['year'].unique():
 
     # Select data for the year
     births_year = births_df[births_df.year == year]
@@ -309,7 +309,6 @@ surrounded by quotes. This code produces the string
  data/yearly_files/births2002.csv which contains the path to the new filename
 AND the file name itself.
 
-:::::::::::::::::::::::::::::::::::::::  challenge
 
 > ## Challenge: Can you do it?
 >
@@ -390,131 +389,131 @@ print('Their product is:', product_of_inputs, '(this is done outside the functio
 Their product is: 10 (this is done outside the function!)
 ```
 
-::::::::::::::::::::::: instructor
+> ## Instructor Note - Processed Data Checkpoint:
+>
+> When teaching the challenge below,
+> demonstrating the results in a debugging environment
+> can make function scope more clear.
+> 
+> {: .source}
+{: .callout}
 
-When teaching the challenge below,
-demonstrating the results in a debugging environment
-can make function scope more clear.
 
-::::::::::::::::::::::::::::::::::
+> ## Challenge - Functions
+>
+> 1. Change the values of the arguments provided to the function and check its output
+> 2. Try calling the function by giving it the wrong number of arguments (not 2)
+>  or not assigning the function call to a variable (no  product_of_inputs = )
+> 3. Declare a variable inside the function and test to see where it exists (Hint:
+>   can you print it from outside the function?)
+> 4. Explore what happens when a variable both inside and outside the function
+>   have the same name. What happens to the global variable when you change the
+>  value of the local variable?
+>
+> > ## Solution
+> > 
+> > 1. For example, using an integer and a string:
+> >    ```python
+> >    product_of_inputs = this_is_the_function_name(3, 'clap')
+> >    print(product_of_inputs)
+> >    ```
+> >    
+> >    ```output
+> >    The function arguments are: 3 clap (this is done inside the function!)
+> >    clapclapclap
+> >    ```
+> > 2. For example, providing a third integer argument:
+> >    ```python
+> >    product_of_inputs = this_is_the_function_name(3, 18, 33)
+> >    ```
+> >    
+> >    ```error
+> >    TypeError: this_is_the_function_name() takes 2 positional arguments but 3 were given
+> >    ```
+> >    
+> >    and proving the correct number of arguments but not capturing the return value in a variable:
+> >    ```python
+> >    this_is_the_function_name(23, 108)
+> >    ```
+> >    
+> >    ```output
+> >    The function arguments are: 23 108 (this is done inside the function!)
+> >    2484
+> >    ```
+> > 3. An example looking at variables defined outside and inside the function.
+> >    Note that the explanatory comments have been removed from the function definition.
+> >    ```python
+> >    var_defined_outside = 'outside'
+> >    def this_is_the_function_name(input_argument1, input_argument2):
+> >        var_defined_inside = 'inside'
+> >        print('The function arguments are:', input_argument1, input_argument2, '(this is done inside the function!)')
+> >        print('This variable was created ' + var_defined_outside + ' the function')
+> >        return input_argument1 * input_argument2
+> >    
+> >    this_is_the_function_name(3.3, 7.9)
+> >    print('This variable was created' + var_defined_inside + ' the function')
+> >    ```
+> >    
+> >    ```output
+> >    The function arguments are: 3.3 7.9 (this is done inside the function!)
+> >    This variable was created outside the function
+> >    26.07
+> >    ```
+> >    
+> >    ```error
+> >    NameError: name 'var_defined_inside' is not defined
+> >    ```
+> >    
+> >    We can see from these results that variables defined outside the function
+> >    are available for use inside them, while variables defined inside a function
+> >    are not available outside them.
+> > 4. 
+> >    ```python
+> >    shared_variable_name = 'who would I be'
+> >    
+> >    def this_is_the_function_name(input_argument1, input_argument2):
+> >        shared_variable_name = 'without you'
+> >        print('The function arguments are:', input_argument1, input_argument2, '(this is done inside the function!)')
+> >        return input_argument1 * input_argument2
+> > 
+> >    print(shared_variable_name)
+> >    
+> >    this_is_the_function_name(2, 3) # does calling the function change the variable's value?
+> >    
+> >    print(shared_variable_name)
+> >    ```
+> >    
+> >    ```output
+> >    who would I be
+> >    The function arguments are: 2 3 (this is done inside the function!)
+> >    6
+> >    who would I be
+> >    ```
+> >    
+> >    And what about if we modify the variable inside the function?
+> >    
+> >    ```python
+> >    def this_is_the_function_name(input_argument1, input_argument2):
+> >        shared_variable_name = 'without you'
+> >        shared_variable_name = shared_variable_name + ', without them?'
+> >        print(shared_variable_name)
+> >        print('The function arguments are:', input_argument1, input_argument2, '(this is done inside the function!)')
+> >        return input_argument1 * input_argument2
+> >    
+> >    this_is_the_function_name(2, 3)
+> >    print(shared_variable_name)
+> >    ```
+> >    
+> >    ```output
+> >    without you, without them?
+> >    The function arguments are: 2 3 (this is done inside the function!)
+> >    6
+> >    who would I be
+> >    ```
+> > 
+> {: .solution}
+{: .challenge}
 
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-## Challenge - Functions
-
-1. Change the values of the arguments provided to the function and check its output
-2. Try calling the function by giving it the wrong number of arguments (not 2)
-  or not assigning the function call to a variable (no  product_of_inputs = )
-3. Declare a variable inside the function and test to see where it exists (Hint:
-  can you print it from outside the function?)
-4. Explore what happens when a variable both inside and outside the function
-  have the same name. What happens to the global variable when you change the
-  value of the local variable?
-
-::::::::::::::::::::::: solution
-
-1. For example, using an integer and a string:
-   ```python
-   product_of_inputs = this_is_the_function_name(3, 'clap')
-   print(product_of_inputs)
-   ```
-   
-   ```output
-   The function arguments are: 3 clap (this is done inside the function!)
-   clapclapclap
-   ```
-2. For example, providing a third integer argument:
-   ```python
-   product_of_inputs = this_is_the_function_name(3, 18, 33)
-   ```
-   
-   ```error
-   TypeError: this_is_the_function_name() takes 2 positional arguments but 3 were given
-   ```
-   
-   and proving the correct number of arguments but not capturing the return value in a variable:
-   ```python
-   this_is_the_function_name(23, 108)
-   ```
-   
-   ```output
-   The function arguments are: 23 108 (this is done inside the function!)
-   2484
-   ```
-3. An example looking at variables defined outside and inside the function.
-   Note that the explanatory comments have been removed from the function definition.
-   ```python
-   var_defined_outside = 'outside'
-   def this_is_the_function_name(input_argument1, input_argument2):
-       var_defined_inside = 'inside'
-       print('The function arguments are:', input_argument1, input_argument2, '(this is done inside the function!)')
-       print('This variable was created ' + var_defined_outside + ' the function')
-       return input_argument1 * input_argument2
-   
-   this_is_the_function_name(3.3, 7.9)
-   print('This variable was created' + var_defined_inside + ' the function')
-   ```
-   
-   ```output
-   The function arguments are: 3.3 7.9 (this is done inside the function!)
-   This variable was created outside the function
-   26.07
-   ```
-   
-   ```error
-   NameError: name 'var_defined_inside' is not defined
-   ```
-   
-   We can see from these results that variables defined outside the function
-   are available for use inside them, while variables defined inside a function
-   are not available outside them.
-4. 
-   ```python
-   shared_variable_name = 'who would I be'
-   
-   def this_is_the_function_name(input_argument1, input_argument2):
-       shared_variable_name = 'without you'
-       print('The function arguments are:', input_argument1, input_argument2, '(this is done inside the function!)')
-       return input_argument1 * input_argument2
-
-   print(shared_variable_name)
-   
-   this_is_the_function_name(2, 3) # does calling the function change the variable's value?
-   
-   print(shared_variable_name)
-   ```
-   
-   ```output
-   who would I be
-   The function arguments are: 2 3 (this is done inside the function!)
-   6
-   who would I be
-   ```
-   
-   And what about if we modify the variable inside the function?
-   
-   ```python
-   def this_is_the_function_name(input_argument1, input_argument2):
-       shared_variable_name = 'without you'
-       shared_variable_name = shared_variable_name + ', without them?'
-       print(shared_variable_name)
-       print('The function arguments are:', input_argument1, input_argument2, '(this is done inside the function!)')
-       return input_argument1 * input_argument2
-   
-   this_is_the_function_name(2, 3)
-   print(shared_variable_name)
-   ```
-   
-   ```output
-   without you, without them?
-   The function arguments are: 2 3 (this is done inside the function!)
-   6
-   who would I be
-   ```
-
-::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
 
 We can now turn our code for saving yearly data files into a function. There are
 many different "chunks" of this code that we can turn into functions, and we can
@@ -531,11 +530,11 @@ def one_year_csv_writer(this_year, all_data):
     """
 
     # Select data for the year
-    surveys_year = all_data[all_data.year == this_year]
+    births_year = all_data[all_data.year == this_year]
 
     # Write the new DataFrame to a csv file
-    filename = 'data/yearly_files/function_surveys' + str(this_year) + '.csv'
-    surveys_year.to_csv(filename)
+    filename = 'data/yearly_files/function_births' + str(this_year) + '.csv'
+    births_year.to_csv(filename)
 ```
 
 The text between the two sets of triple double quotes is called a docstring and
@@ -565,7 +564,7 @@ one_year_csv_writer?
 ```
 
 ```python
-one_year_csv_writer(2002, surveys_df)
+one_year_csv_writer(2002, births_df)
 ```
 
 We changed the root of the name of the CSV file so we can distinguish it from
@@ -602,117 +601,122 @@ function:
 
 ```python
 # Load the data into a DataFrame
-surveys_df = pd.read_csv('data/surveys.csv')
+births_df = pd.read_csv('data/births.csv')
 
 # Create CSV files
-yearly_data_csv_writer(1977, 2002, surveys_df)
+yearly_data_csv_writer(1997, 2002, births_df)
 ```
+> ## Beware
+>
+> If you are using Jupyter Notebooks and you modify a function, you MUST
+> re-run that cell in order for the changed function to be available to the rest
+> of the code. Nothing will visibly happen when you do this, though, because
+> defining a function without *calling* it doesn't produce an output. Any
+> cells that use the now-changed functions will also have to be re-run for their
+> output to change.
+> 
+> {: .source}
+{: .callout}
 
-BEWARE! If you are using Jupyter Notebooks and you modify a function, you MUST
-re-run that cell in order for the changed function to be available to the rest
-of the code. Nothing will visibly happen when you do this, though, because
-defining a function without *calling* it doesn't produce an output. Any
-cells that use the now-changed functions will also have to be re-run for their
-output to change.
 
-:::::::::::::::::::::::::::::::::::::::  challenge
 
-## Challenge: More functions
 
-1. Add two arguments to the functions we wrote that take the path of the
-  directory where the files will be written and the root of the file name.
-  Create a new set of files with a different name in a different directory.
-2. How could you use the function `yearly_data_csv_writer to create a CSV file
-  for only one year? (Hint: think about the syntax for  range )
-3. Make the functions return a list of the files they have written. There are
-  many ways you can do this (and you should try them all!): either of the
-  functions can print to screen, either can use a return statement to give back
-  numbers or strings to their function call, or you can use some combination of
-  the two. You could also try using the  os library to list the contents of
-  directories.
-4. Explore what happens when variables are declared inside each of the functions
-  versus in the main (non-indented) body of your code. What is the scope of the
-  variables (where are they visible)? What happens when they have the same name
-  but are given different values?
-  
-::::::::::::::::::::::: solution
-
-1. 
-   ```python
-   def one_year_csv_writer(this_year, all_data, folder_to_save, root_name):
-       """
-       Writes a csv file for data from a given year.
-   
-       Parameters
-       ---------
-       this_year : int
-           year for which data is extracted
-       all_data: pd.DataFrame
-           DataFrame with multi-year data
-       folder_to_save : str
-           folder to save the data files
-       root_name: str
-           root of the filenames to save the data
-       """
-   
-       # Select data for the year
-       surveys_year = all_data[all_data.year == this_year]
-   
-       # Write the new DataFrame to a csv file
-       filename = os.path.join(folder_to_save, ''.join([root_name, str(this_year), '.csv']))
-       surveys_year.to_csv(filename)
-   
-   start_year = 1978
-   end_year = 2000
-   directory_name = 'different_directory'
-   root_file_name = 'different_file_name'
-   for year in range(start_year, end_year+1):
-        one_year_csv_writer(year, surveys_df, directory_name, root_file_name)
-   ```
-2.  yearly_data_csv_writer(2000, 2000, surveys_df) 
-3. Building a list and returning it:
-   ```python
-   def one_year_csv_writer(this_year, all_data):
-       """
-       Writes a csv file for data from a given year.
-       
-       this_year -- year for which data is extracted
-       all_data -- DataFrame with multi-year data
-       """
-       
-       # Select data for the year
-       surveys_year = all_data[all_data.year == this_year]
-       
-       # Write the new DataFrame to a csv file
-       filename = 'data/yearly_files/function_surveys' + str(this_year) + '.csv'
-       surveys_year.to_csv(filename)
-       return filename
-   
-   def yearly_data_csv_writer(start_year, end_year, all_data):
-       """
-       Writes separate CSV files for each year of data.
-       
-       start_year -- the first year of data we want
-       end_year -- the last year of data we want
-       all_data -- DataFrame with multi-year data
-       """
-        
-       # "end_year" is the last year of data we want to pull, so we loop to end_year+1
-       output_files = []
-       for year in range(start_year, end_year+1):
-           output_files.append(one_year_csv_writer(year, all_data))
-       return output_files
-   
-   print(yearly_data_csv_writer(2000, 2001, surveys_df))
-   ```
-   
-   ```output
-   ['data/yearly_files/function_surveys2000.csv', 'data/yearly_files/function_surveys2001.csv']
-   ```
-
-::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
+> ## Challenge - More functions
+> 
+> 1. Add two arguments to the functions we wrote that take the path of the
+>   directory where the files will be written and the root of the file name.
+>   Create a new set of files with a different name in a different directory.
+> 2. How could you use the function `yearly_data_csv_writer to create a CSV file
+>   for only one year? (Hint: think about the syntax for  range )
+> 3. Make the functions return a list of the files they have written. There are
+>   many ways you can do this (and you should try them all!): either of the
+>   functions can print to screen, either can use a return statement to give back
+>   numbers or strings to their function call, or you can use some combination of
+>   the two. You could also try using the  os library to list the contents of
+>   directories.
+> 4. Explore what happens when variables are declared inside each of the functions
+>   versus in the main (non-indented) body of your code. What is the scope of the
+>   variables (where are they visible)? What happens when they have the same name
+>   but are given different values?
+>
+> > ## Solution
+> > 
+> > 1. 
+> >    ```python
+> >    def one_year_csv_writer(this_year, all_data, folder_to_save, root_name):
+> >        """
+> >        Writes a csv file for data from a given year.
+> >    
+> >        Parameters
+> >        ---------
+> >        this_year : int
+> >            year for which data is extracted
+> >        all_data: pd.DataFrame
+> >            DataFrame with multi-year data
+> >        folder_to_save : str
+> >            folder to save the data files
+> >        root_name: str
+> >            root of the filenames to save the data
+> >        """
+> >    
+> >        # Select data for the year
+> >        births_year = all_data[all_data.year == this_year]
+> >    
+> >        # Write the new DataFrame to a csv file
+> >        filename = os.path.join(folder_to_save, ''.join([root_name, str(this_year), '.csv']))
+> >       births_year.to_csv(filename)
+> >    
+> >    start_year = 1994
+> >    end_year = 2014
+> >    directory_name = 'different_directory'
+> >    root_file_name = 'different_file_name'
+> >    for year in range(start_year, end_year+1):
+> >         one_year_csv_writer(year, births_df, directory_name, root_file_name)
+> >    ```
+> > 2.  yearly_data_csv_writer(2000, 2000, births_df) 
+> > 3. Building a list and returning it:
+> >    ```python
+> >    def one_year_csv_writer(this_year, all_data):
+> >        """
+> >        Writes a csv file for data from a given year.
+> >        
+> >        this_year -- year for which data is extracted
+> >        all_data -- DataFrame with multi-year data
+> >        """
+> >        
+> >        # Select data for the year
+> >        births_year = all_data[all_data.year == this_year]
+> >        
+> >        # Write the new DataFrame to a csv file
+> >        filename = 'data/yearly_files/function_births' + str(this_year) + '.csv'
+> >        births_year.to_csv(filename)
+> >        return filename
+> >    
+> >    def yearly_data_csv_writer(start_year, end_year, all_data):
+> >        """
+> >        Writes separate CSV files for each year of data.
+> >        
+> >        start_year -- the first year of data we want
+> >        end_year -- the last year of data we want
+> >        all_data -- DataFrame with multi-year data
+> >        """
+> >         
+> >        # "end_year" is the last year of data we want to pull, so we loop to end_year+1
+> >        output_files = []
+> >        for year in range(start_year, end_year+1):
+> >            output_files.append(one_year_csv_writer(year, all_data))
+> >        return output_files
+> >    
+> >    print(yearly_data_csv_writer(2000, 2001, births_df))
+> >    ```
+> >    
+> >    ```output
+> >    ['data/yearly_files/function_births2000.csv', > > 'data/yearly_files/function_births2001.csv']
+> >    ```
+> > 
+> >
+> {: .solution}
+{: .challenge}
 
 The functions we wrote demand that we give them a value for every argument.
 Ideally, we would like these functions to be as flexible and independent as
@@ -724,34 +728,34 @@ values (here,  all_data ) is a required argument and MUST come before the
 argument with default values (which are optional in the function call).
 
 ```python
-def yearly_data_arg_test(all_data, start_year=1977, end_year=2002):
+def yearly_data_arg_test(all_data, start_year=1994, end_year=2014):
     """
     Modified from yearly_data_csv_writer to test default argument values!
 
-    start_year -- the first year of data we want (default 1977)
-    end_year -- the last year of data we want (default 2002)
+    start_year -- the first year of data we want (default 1994)
+    end_year -- the last year of data we want (default 2014)
     all_data -- DataFrame with multi-year data
     """
 
     return start_year, end_year
 
 
-start, end = yearly_data_arg_test(surveys_df, 1988, 1993)
+start, end = yearly_data_arg_test(births_df, 1997, 2006)
 print('Both optional arguments:\t', start, end)
 
-start, end = yearly_data_arg_test(surveys_df)
+start, end = yearly_data_arg_test(births_df)
 print('Default values:\t\t\t', start, end)
 ```
 
 ```output
-Both optional arguments:	1988 1993
-Default values:		1977 2002
+Both optional arguments:	1997 2006
+Default values:		1994 2014
 ```
 
 The "\\t" in the  print statements are tabs, used to make the text align and be
 easier to read.
 
-But what if our dataset doesn't start in 1977 and end in 2002? We can modify the
+But what if our dataset doesn't start in 1994 and end in 2014? We can modify the
 function so that it looks for the start and end years in the dataset if those
 dates are not provided:
 
@@ -773,16 +777,16 @@ def yearly_data_arg_test(all_data, start_year=None, end_year=None):
     return start_year, end_year
 
 
-start, end = yearly_data_arg_test(surveys_df, 1988, 1993)
+start, end = yearly_data_arg_test(births_df, 1997, 2006)
 print('Both optional arguments:\t', start, end)
 
-start, end = yearly_data_arg_test(surveys_df)
+start, end = yearly_data_arg_test(births_df)
 print('Default values:\t\t\t', start, end)
 ```
 
 ```output
-Both optional arguments:	1988 1993
-Default values:		1977 2002
+Both optional arguments:	1997 2006
+Default values:		1994 2014
 ```
 
 The default values of the  start_year and  end_year arguments in the function
@@ -793,77 +797,76 @@ doesn't correspond to any existing object.
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
-## Challenge - Variables
-
-1. What type of object corresponds to a variable declared as  None ? (Hint:
-  create a variable set to  None and use the function  type() )
-2. Compare the behavior of the function  yearly_data_arg_test when the
-  arguments have  None as a default and when they do not have default values.
-3. What happens if you only include a value for  start_year in the function
-  call? Can you write the function call with only a value for  end_year ? (Hint:
-  think about how the function must be assigning values to each of the arguments -
-  this is related to the need to put the arguments without default values before
-  those with default values in the function definition!)
-
-::::::::::::::::::::::: solution
-
-1. 
-   ```python
-   nothing = None
-   type(nothing)
-   ```
-   
-   ```output
-   NoneType
-   ```
-2. Removing  None as the default value for the  start_year and  end_year parameters
-   results in a  TypeError because the function now expects three arguments to be provided:
-   ```python
-   def yearly_data_arg_test(all_data, start_year, end_year):
-       """
-       Modified from yearly_data_csv_writer to test default argument values!
-   
-       all_data -- DataFrame with multi-year data
-       start_year -- the first year of data we want, Check all_data! (default None)
-       end_year -- the last year of data we want; Check all_data! (default None)
-       """
-   
-       if start_year is None:
-           start_year = min(all_data.year)
-       if end_year is None:
-           end_year = max(all_data.year)
-   
-       return start_year, end_year
-   
-   start, end = yearly_data_arg_test(surveys_df)
-   ```
-   
-   ```error
-   TypeError: yearly_data_arg_test() missing 2 required positional arguments: 'start_year' and 'end_year'
-   ```
-3. Returning to the original definition of the function (i.e. with the default  None values):
-   ```python
-   yearly_data_arg_test(surveys_df, 1985) # providing only the start year
-   ```
-   
-   ```output
-   (1985, 2002)
-   ```
-   
-   If we want to provide only the end year,
-   we have to name the arguments:
-   
-   ```python
-   yearly_data_arg_test(surveys_df, end_year=1985) # providing only the start year
-   ```
-   
-   ```output
-   (1977, 1985)
-   ```
-
-::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
+> ## Challenge - Variables
+> 
+> 1. What type of object corresponds to a variable declared as  None ? (Hint:
+>   create a variable set to  None and use the function  type() )
+> 2. Compare the behavior of the function  yearly_data_arg_test when the
+>   arguments have  None as a default and when they do not have default values.
+> 3. What happens if you only include a value for  start_year in the function
+>   call? Can you write the function call with only a value for  end_year ? (Hint:
+>   think about how the function must be assigning values to each of the arguments -
+>   this is related to the need to put the arguments without default values before
+>   those with default values in the function definition!)
+> 
+> > ## Solution
+> > 
+> > 1. 
+> >    ```python
+> >    nothing = None
+> >    type(nothing)
+> >    ```
+> >    
+> >    ```output
+> >    NoneType
+> >    ```
+> > 2. Removing  None as the default value for the  start_year and  end_year parameters
+> >    results in a  TypeError because the function now expects three arguments to be provided:
+> >    ```python
+> >    def yearly_data_arg_test(all_data, start_year, end_year):
+> >        """
+> >        Modified from yearly_data_csv_writer to test default argument values!
+> >    
+> >        all_data -- DataFrame with multi-year data
+> >        start_year -- the first year of data we want, Check all_data! > > (default None)
+> >        end_year -- the last year of data we want; Check all_data! (default None)
+> >        """
+> >    
+> >        if start_year is None:
+> >            start_year = min(all_data.year)
+> >        if end_year is None:
+> >            end_year = max(all_data.year)
+> >    
+> >        return start_year, end_year
+> >    
+> >    start, end = yearly_data_arg_test(births_df)
+> >    ```
+> >    
+> >    ```error
+> >    TypeError: yearly_data_arg_test() missing 2 required positional arguments: 'start_year' and 'end_year'
+> >    ```
+> > 3. Returning to the original definition of the function (i.e. with the default  None values):
+> >    ```python
+> >    yearly_data_arg_test(births_df, 1997) # providing only the start year
+> >    ```
+> >    
+> >    ```output
+> >    (1997, 2014)
+> >    ```
+> >    
+> >    If we want to provide only the end year,
+> >    we have to name the arguments:
+> >    
+> >    ```python
+> >    yearly_data_arg_test(births_df, end_year=2006) # providing only the start year
+> >    ```
+> >    
+> >    ```output
+> >    (1994, 2006)
+> >    ```
+> >
+> {: .solution}
+{: .challenge}
 
 ## If Statements
 
@@ -918,195 +921,190 @@ function definition is associated with a keyword and the function call passes
 values to the function using these keywords:
 
 ```python
-start, end = yearly_data_arg_test(surveys_df)
+start, end = yearly_data_arg_test(births_df)
 print('Default values:\t\t\t', start, end)
 
-start, end = yearly_data_arg_test(surveys_df, 1988, 1993)
+start, end = yearly_data_arg_test(births_df, 1997, 2006)
 print('No keywords:\t\t\t', start, end)
 
-start, end = yearly_data_arg_test(surveys_df, start_year=1988, end_year=1993)
+start, end = yearly_data_arg_test(births_df, start_year=1997, end_year=2006)
 print('Both keywords, in order:\t', start, end)
 
-start, end = yearly_data_arg_test(surveys_df, end_year=1993, start_year=1988)
+start, end = yearly_data_arg_test(births_df, end_year=20016, start_year=1988)
 print('Both keywords, flipped:\t\t', start, end)
 
-start, end = yearly_data_arg_test(surveys_df, start_year=1988)
+start, end = yearly_data_arg_test(births_df, start_year=1997)
 print('One keyword, default end:\t', start, end)
 
-start, end = yearly_data_arg_test(surveys_df, end_year=1993)
+start, end = yearly_data_arg_test(births_df, end_year=2006)
 print('One keyword, default start:\t', start, end)
 ```
 
 ```output
-Default values:		1977 2002
-No keywords:		1988 1993
-Both keywords, in order:	1988 1993
-Both keywords, flipped:	1988 1993
-One keyword, default end:	1988 2002
-One keyword, default start:	1977 1993
+Default values:		1994 2014
+No keywords:		1997 2006
+Both keywords, in order:	1997 2006
+Both keywords, flipped:	1997 2006
+One keyword, default end:	2006 2014
+One keyword, default start:	1994 1997
 ```
 
 :::::::::::::::::::::::::::::::::::::::  challenge
-
-## Challenge - Modifying functions
-
-1. Rewrite the  one_year_csv_writer and  yearly_data_csv_writer functions to
-   have keyword arguments with default values
-2. Modify the functions so that they don't create yearly files if there is no
-   data for a given year and display an alert to the user (Hint: use conditional
-   statements to do this. For an extra challenge, use  try 
-   statements!)
-3. The code below checks to see whether a directory exists and creates one if it
-   doesn't. Add some code to your function that writes out the CSV files, to check
-   for a directory to write to.
-   ```python 
-   if 'dir_name_here' in os.listdir('.'):
-       print('Processed directory exists')
-   else:
-       os.mkdir('dir_name_here')
-   print('Processed directory created')
-   ```
-4. The code that you have written so far to loop through the years is good,
-   however it is not necessarily reproducible with different datasets.
-   For instance, what happens to the code if we have additional years of data
-   in our CSV files? Using the tools that you learned in the previous activities,
-   make a list of all years represented in the data. Then create a loop to process
-   your data, that begins at the earliest year and ends at the latest year using
-   that list.
-
-HINT: you can create a loop with a list as follows: for years in year_list: 
-
-::::::::::::::::::::::: solution
-
-1. 
-   ```python
-   def one_year_csv_writer(this_year, all_data, folder_to_save='./', root_name='survey'):
-       """
-       Writes a csv file for data from a given year.
-   
-       Parameters
-       ---------
-       this_year : int
-           year for which data is extracted
-       all_data: pd.DataFrame
-           DataFrame with multi-year data
-       folder_to_save : str
-           folder to save the data files
-       root_name: str
-           root of the filenames to save the data
-       """
-   
-       # Select data for the year
-       surveys_year = all_data[all_data.year == this_year]
-   
-       # Write the new DataFrame to a csv file
-       filename = os.path.join(folder_to_save, ''.join([root_name, str(this_year), '.csv']))
-       surveys_year.to_csv(filename)
-   
-   def yearly_data_csv_writer(all_data, start_year=None, end_year=None):
-       """
-       Writes separate CSV files for each year of data.
-       
-       start_year -- the first year of data we want
-       end_year -- the last year of data we want
-       all_data -- DataFrame with multi-year data
-       """
-       if start_year is None:
-           start_year = min(all_data.year)
-       if end_year is None:
-           end_year = max(all_data.year)
-       # "end_year" is the last year of data we want to pull, so we loop to end_year+1
-       for year in range(start_year, end_year+1):
-           one_year_csv_writer(year, all_data)
-   ```
-2. 
-   ```python
-   def one_year_csv_writer(this_year, all_data, folder_to_save='./', root_name='survey'):
-       """
-       Writes a csv file for data from a given year.
-       
-       Parameters
-       ---------
-       this_year : int
-           year for which data is extracted
-       all_data: pd.DataFrame
-           DataFrame with multi-year data
-       folder_to_save : str
-           folder to save the data files
-       root_name: str
-           root of the filenames to save the data
-       """
-       
-       # Select data for the year
-       surveys_year = all_data[all_data.year == this_year]
-       if len(surveys_year) == 0: # 'if not len(surveys_year):' will also work 
-           print('no data available for ' + this_year + ', output file not created')
-       else:
-           # Write the new DataFrame to a csv file
-           filename = os.path.join(folder_to_save, ''.join([root_name, str(this_year), '.csv']))
-           surveys_year.to_csv(filename)
-   ```
-3. The solution below uses not to invert the check for the directory,
-   so a message is printed one time at most i.e. when the directory is created:
-   ```python
-   def one_year_csv_writer(this_year, all_data, folder_to_save='./', root_name='survey'):
-       """
-       Writes a csv file for data from a given year.
-       
-       Parameters
-       ---------
-       this_year : int
-           year for which data is extracted
-       all_data: pd.DataFrame
-           DataFrame with multi-year data
-       folder_to_save : str
-           folder to save the data files
-       root_name: str
-           root of the filenames to save the data
-       """
-       
-       # Select data for the year
-       surveys_year = all_data[all_data.year == this_year]
-       if len(surveys_year) == 0:
-           print('no data available for ' + this_year + ', output file not created')
-       else:
-           if folder_to_save not in os.listdir('.'):
-               os.mkdir(folder_to_save)
-               print('Processed directory created')
-           # Write the new DataFrame to a csv file
-           filename = os.path.join(folder_to_save, ''.join([root_name, str(this_year), '.csv']))
-           surveys_year.to_csv(filename)
-   ```
-   The equivalent, without using not to invert the conditional, would be:
-   ```python
-   if folder_to_save in os.listdir('.'):
-       pass
-   else:
-       os.mkdir(folder_to_save)
-       print('Processed directory created')
-   ```
-4.
-   ```python
-   def yearly_data_csv_writer(all_data, yearcolumn="year",
-                              folder_to_save='./', root_name='survey'):
-       """
-       Writes separate csv files for each year of data.
-   
-       all_data --- DataFrame with multi-year data
-       yearcolumn --- column name containing the year of the data
-       folder_to_save --- folder name to store files
-       root_name --- start of the file names stored
-       """
-       years = all_data[yearcolumn].unique()
-       filenames = []
-       for year in years:
-           filenames.append(one_year_csv_writer(year, all_data, folder_to_save, root_name))
-       return filenames
-   ```
-
-::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-
-
+> ## Challenge - Modifying Functions
+> 
+> 1. Rewrite the  one_year_csv_writer and  yearly_data_csv_writer functions to
+>    have keyword arguments with default values
+> 2. Modify the functions so that they don't create yearly files if there is no
+>    data for a given year and display an alert to the user (Hint: use conditional
+>    statements to do this. For an extra challenge, use  try 
+>    statements!)
+> 3. The code below checks to see whether a directory exists and creates one if it
+>    doesn't. Add some code to your function that writes out the CSV files, to check
+>    for a directory to write to.
+>    ```python 
+>    if 'dir_name_here' in os.listdir('.'):
+>        print('Processed directory exists')
+>    else:
+>        os.mkdir('dir_name_here')
+>    print('Processed directory created')
+>    ```
+> 4. The code that you have written so far to loop through the years is good,
+>    however it is not necessarily reproducible with different datasets.
+>    For instance, what happens to the code if we have additional years of data
+>    in our CSV files? Using the tools that you learned in the previous activities,
+>    make a list of all years represented in the data. Then create a loop to process
+>    your data, that begins at the earliest year and ends at the latest year using
+>    that list.
+> 
+> HINT: you can create a loop with a list as follows: for years in year_list: 
+>
+> > ## Solution
+> > 
+> > 1. 
+> >    ```python
+> >    def one_year_csv_writer(this_year, all_data, folder_to_save='./', root_name='birth'):
+> >        """
+> >        Writes a csv file for data from a given year.
+> >    
+> >        Parameters
+> >        ---------
+> >        this_year : int
+> >            year for which data is extracted
+> >        all_data: pd.DataFrame
+> >            DataFrame with multi-year data
+> >        folder_to_save : str
+> >            folder to save the data files
+> >        root_name: str
+> >            root of the filenames to save the data
+> >        """
+> >    
+> >        # Select data for the year
+> >        births_year = all_data[all_data.year == this_year]
+> >    
+> >        # Write the new DataFrame to a csv file
+> >        filename = os.path.join(folder_to_save, ''.join([root_name, str(this_year), '.csv']))
+> >        births_year.to_csv(filename)
+> >    
+> >    def yearly_data_csv_writer(all_data, start_year=None, end_year=None):
+> >        """
+> >        Writes separate CSV files for each year of data.
+> >        
+> >        start_year -- the first year of data we want
+> >        end_year -- the last year of data we want
+> >        all_data -- DataFrame with multi-year data
+> >        """
+> >        if start_year is None:
+> >            start_year = min(all_data.year)
+> >        if end_year is None:
+> >            end_year = max(all_data.year)
+> >        # "end_year" is the last year of data we want to pull, so we loop to end_year+1
+> >        for year in range(start_year, end_year+1):
+> >            one_year_csv_writer(year, all_data)
+> >    ```
+> > 2. 
+> >    ```python
+> >    def one_year_csv_writer(this_year, all_data, folder_to_save='./', root_name='birth'):
+> >        """
+> >        Writes a csv file for data from a given year.
+> >        
+> >        Parameters
+> >        ---------
+> >        this_year : int
+> >            year for which data is extracted
+> >        all_data: pd.DataFrame
+> >            DataFrame with multi-year data
+> >        folder_to_save : str
+> >            folder to save the data files
+> >        root_name: str
+> >            root of the filenames to save the data
+> >        """
+> >        
+> >        # Select data for the year
+> >        births_year = all_data[all_data.year == this_year]
+> >        if len(births_year) == 0: # 'if not len(births_year):' will also work 
+> >            print('no data available for ' + this_year + ', output file not created')
+> >        else:
+> >            # Write the new DataFrame to a csv file
+> >            filename = os.path.join(folder_to_save, ''.join([root_name, str(this_year), '.csv']))
+> >            births_year.to_csv(filename)
+> >    ```
+> > 3. The solution below uses not to invert the check for the directory,
+> >    so a message is printed one time at most i.e. when the directory is created:
+> >    ```python
+> >    def one_year_csv_writer(this_year, all_data, folder_to_save='./', root_name='birth'):
+> >        """
+> >        Writes a csv file for data from a given year.
+> >        
+> >        Parameters
+> >        ---------
+> >        this_year : int
+> >            year for which data is extracted
+> >        all_data: pd.DataFrame
+> >            DataFrame with multi-year data
+> >        folder_to_save : str
+> >            folder to save the data files
+> >        root_name: str
+> >            root of the filenames to save the data
+> >        """
+> >        
+> >        # Select data for the year
+> >        births_year = all_data[all_data.year == this_year]
+> >        if len(births_year) == 0:
+> >            print('no data available for ' + this_year + ', output file not created')
+> >        else:
+> >            if folder_to_save not in os.listdir('.'):
+> >                os.mkdir(folder_to_save)
+> >                print('Processed directory created')
+> >            # Write the new DataFrame to a csv file
+> >            filename = os.path.join(folder_to_save, ''.join([root_name, str(this_year), '.csv']))
+> >            births_year.to_csv(filename)
+> >    ```
+> >    The equivalent, without using not to invert the conditional, would be:
+> >    ```python
+> >    if folder_to_save in os.listdir('.'):
+> >        pass
+> >    else:
+> >        os.mkdir(folder_to_save)
+> >        print('Processed directory created')
+> >    ```
+> > 4.
+> >    ```python
+> >    def yearly_data_csv_writer(all_data, yearcolumn="year",
+> >                               folder_to_save='./', root_name='birth'):
+> >        """
+> >        Writes separate csv files for each year of data.
+> >    
+> >        all_data --- DataFrame with multi-year data
+> >        yearcolumn --- column name containing the year of the data
+> >        folder_to_save --- folder name to store files
+> >        root_name --- start of the file names stored
+> >        """
+> >        years = all_data[yearcolumn].unique()
+> >        filenames = []
+> >        for year in years:
+> >            filenames.append(one_year_csv_writer(year, all_data, folder_to_save, root_name))
+> >        return filenames
+> >    ```
+> >
+> {: .solution}
+{: .challenge}

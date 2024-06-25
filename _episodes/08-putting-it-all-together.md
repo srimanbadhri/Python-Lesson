@@ -29,12 +29,7 @@ through as well as the Python documentation to help you along.
 
 There are many repositories online from which you can obtain data. We are
 providing you with one data file to use with these exercises, but feel free to
-use any data that is relevant to your research. The file
-[bouldercreek_09_2013.txt](data/bouldercreek_09_2013.txt)
-contains stream discharge data, summarized at
-15 minute intervals (in cubic feet per second) for a streamgage on Boulder
-Creek at North 75th Street (USGS gage06730200) for 1-30 September 2013. If you'd
-like to use this dataset, please find it in the data folder.
+use any data that is relevant to your research. 
 
 ## Clean up your data and open it using Python and Pandas
 
@@ -103,41 +98,44 @@ import matplotlib.pyplot as plt
 Now, let's read data and plot it!
 
 ```python
-surveys = pd.read_csv("data/surveys.csv")
-my_plot = surveys.plot("hindfoot_length", "weight", kind="scatter")
+births = pd.read_csv("data/US_births_2000-2014_SSA.csv")
+my_plot = births.plot("year", "births", kind="scatter")
 plt.show() # not necessary in Jupyter Notebooks
 ```
 
-![](fig/08_scatter_surveys.png){alt='Scatter plot of survey data set'}
+![Scatter Plot](/assets/img/scatter-plot.png){alt='Scatter plot of births data set'}
 
-:::::::::::::::::::::::::::::::::::::::::  callout
 
-## Tip
 
-By default, matplotlib creates a figure in a separate window. When using
-Jupyter notebooks, we can make figures appear in-line within the notebook by
-executing:
+> ## Tip
+>
+> By default, matplotlib creates a figure in a separate window. When using
+> Jupyter notebooks, we can make figures appear in-line within the notebook by
+> executing:
+> 
+> ```python
+> %matplotlib inline
+> ```
+> 
+> {: .source}
+{: .callout}
 
-```python
-%matplotlib inline
-```
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
 
 The returned object is a matplotlib object (check it yourself with type(my_plot)),
 to which we may make further adjustments and refinements using other matplotlib methods.
 
-:::::::::::::::::::::::::::::::::::::::::  callout
 
-## Tip
+> ## Tip
+>
+> Matplotlib itself can be overwhelming, so a useful strategy is to
+> do as much as you easily can in a convenience layer, *i.e.* start
+> creating the plot in Pandas or plotnine, and then use matplotlib
+> for the rest.
+> 
+> {: .source}
+{: .callout}
 
-Matplotlib itself can be overwhelming, so a useful strategy is to
-do as much as you easily can in a convenience layer, *i.e.* start
-creating the plot in Pandas or plotnine, and then use matplotlib
-for the rest.
 
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
 
 We will cover a few basic commands for creating and formatting plots with matplotlib in this lesson.
 A great resource for help creating and styling your figures is the [matplotlib gallery](https://matplotlib.org/stable/gallery/), which includes plots in many different styles and the source codes that create them.
@@ -161,21 +159,20 @@ To plot a histogram of our draws from the normal distribution, we can use the hi
 plt.hist(sample_data)
 ```
 
-![](fig/08-normal-distribution.png){alt='Histogram of 1000 samples from normal distribution'}
+![Histogram](/assets/img/sample-data.png){alt='Histogram of 1000 samples from normal distribution'}
 
-:::::::::::::::::::::::::::::::::::::::::  callout
+> ## Tip: Cross-Platform Visualization of Figures
+>
+> Jupyter Notebooks make many aspects of data analysis and visualization much simpler. This includes
+> doing some of the labor of visualizing plots for you. But, not every one of your collaborators
+> will be using a Jupyter Notebook. The .show() command allows you to visualize plots
+> when working at the command line, with a script, or at the IPython interpreter. In the
+> previous example, adding  plt.show() after the creation of the plot will enable your
+> colleagues who aren't using a Jupyter notebook to reproduce your work on their platform.
+> 
+> {: .source}
+{: .callout}
 
-## Tip: Cross-Platform Visualization of Figures
-
-Jupyter Notebooks make many aspects of data analysis and visualization much simpler. This includes
-doing some of the labor of visualizing plots for you. But, not every one of your collaborators
-will be using a Jupyter Notebook. The .show() command allows you to visualize plots
-when working at the command line, with a script, or at the IPython interpreter. In the
-previous example, adding  plt.show() after the creation of the plot will enable your
-colleagues who aren't using a Jupyter notebook to reproduce your work on their platform.
-
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
 
 or create matplotlib figure and axis objects first and subsequently add a histogram with 30
 data bins:
@@ -208,17 +205,17 @@ ax2 = fig.add_axes([0.125, 0.575, 0.3, 0.3])  # number coordinates correspond to
 ax2.hist(beta_draws)
 ```
 
-![](fig/08-dualdistribution.png){alt='Plot with additional axes'}
-
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-## Challenge - Drawing from distributions
-
-Have a look at [numpy.random documentation](https://docs.scipy.org/doc/numpy/reference/random/index.html).
-Choose a distribution you have no familiarity with, and try to sample from and visualize it.
+![](/assets/img/bar-container.png){alt='Plot with additional axes'}
 
 
-::::::::::::::::::::::::::::::::::::::::::::::::::
+> ## Challenge - Drawing from distributions
+> 
+> Have a look at [numpy.random documentation](https://docs.scipy.org/doc/numpy/reference/random/index.html).
+> Choose a distribution you have no familiarity with, and try to sample from and visualize it.
+>
+> {: .source}
+{: .challenge}
+
 
 ### Link matplotlib, Pandas and plotnine
 
@@ -232,84 +229,16 @@ provide, offering a consistent environment to make publication-quality visualiza
 ```python
 fig, ax1 = plt.subplots() # prepare a matplotlib figure
 
-surveys.plot("hindfoot_length", "weight", kind="scatter", ax=ax1)
+births.plot("year", "births", kind="scatter", ax=ax1)
 
 # Provide further adaptations with matplotlib:
-ax1.set_xlabel("Hindfoot length")
+ax1.set_xlabel("Year")
 ax1.tick_params(labelsize=16, pad=8)
-fig.suptitle('Scatter plot of weight versus hindfoot length', fontsize=15)
+fig.suptitle('Scatter plot of births per year', fontsize=15)
 ```
 
-![](fig/08_scatter_surveys_extended.png){alt='Extended version of scatter plot surveys'}
+![](births-per-year.png){alt='Extended version of scatter plot births'}
 
-To retrieve the matplotlib figure object from plotnine for customization, use the draw() function in plotnine:
-
-```python
-import plotnine as p9
-myplot = (p9.ggplot(data=surveys,
-                    mapping=p9.aes(x='hindfoot_length', y='weight')) +
-              p9.geom_point())
-
-# convert output plotnine to a matplotlib object
-my_plt_version = myplot.draw()
-
-# Provide further adaptations with matplotlib:
-p9_ax = my_plt_version.axes[0] # each subplot is an item in a list
-p9_ax.set_xlabel("Hindfoot length")
-p9_ax.tick_params(labelsize=16, pad=8)
-p9_ax.set_title('Scatter plot of weight versus hindfoot length', fontsize=15)
-plt.show() # not necessary in Jupyter Notebooks
-```
-
-![](fig/08_scatter_surveys_plotnine.png){alt='Extended version of plotnine scatter plot'}
-
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-## Challenge - Pandas and matplotlib
-
-Load the streamgage data set with Pandas, subset the week of the 2013 Front Range flood
-(September 11 through 15) and create a hydrograph (line plot) of the discharge data using
-Pandas, linking it to an empty maptlotlib ax object. Create a second axis that displays the
-whole dataset. Adapt the title and axes' labels using matplotlib.
-
-:::::::::::::::  solution
-
-## Answers
-
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
-
-discharge = pd.read_csv("data/bouldercreek_09_2013.txt",
-                        skiprows=27, delimiter="\t",
-                        names=["agency", "site_id", "datetime",
-                               "timezone", "flow_rate", "discharge_cd"])
-discharge["datetime"] = pd.to_datetime(discharge["datetime"])
-flood = discharge[(discharge["datetime"] >= "2013-09-11") &
-                  (discharge["datetime"] <= "2013-09-15")]
-
-fig, ax = plt.subplots()
-
-flood.plot(x="datetime", y="flow_rate", ax=ax)
-ax.set_xlabel("")  # no label
-ax.set_ylabel("Discharge, cubic feet per second")
-ax.legend().set_visible(False)
-ax.set_title("Front Range flood event 2013")
-
-ax2 = fig.add_axes([0.65, 0.575, 0.25, 0.3])
-# DataFrame.plot raises an error with an inset axis object,
-# so we use matplotlib's plot method instead
-ax2.plot("datetime", "flow_rate", data=discharge)
-plt.xticks(rotation=90)
-```
-
-![](fig/08_flood_event.png){alt='Flood event plot'}
-
-
-
-:::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ### Saving matplotlib figures
 
@@ -321,35 +250,31 @@ fig.savefig("my_plot_name.png")
 
 which will save the fig created using Pandas/matplotlib as a png file with the name my_plot_name
 
-:::::::::::::::::::::::::::::::::::::::::  callout
+> ## Tip: Saving figures in different formats
+>
+> Matplotlib recognizes the extension used in the filename and
+> supports (on most computers) png, pdf, ps, eps and svg formats.
+> 
+> {: .source}
+{: .callout}
 
-## Tip: Saving figures in different formats
-
-Matplotlib recognizes the extension used in the filename and
-supports (on most computers) png, pdf, ps, eps and svg formats.
 
 
-::::::::::::::::::::::::::::::::::::::::::::::::::
+> ## Challenge - Saving figure to file
+> 
+> Check the documentation of the savefig method and check how
+> you can comply to journals requiring figures as pdf file with
+> dpi >= 300.
+> 
+> > ## Solution
+> > 
+> > ```python
+> > fig.savefig("my_plot_name.pdf", dpi=300)
+> > ```
+> > 
+> {: .solution}
+{: .challenge}
 
-:::::::::::::::::::::::::::::::::::::::  challenge
-
-## Challenge - Saving figure to file
-
-Check the documentation of the savefig method and check how
-you can comply to journals requiring figures as pdf file with
-dpi >= 300.
-
-:::::::::::::::  solution
-
-## Answers
-
-```python
-fig.savefig("my_plot_name.pdf", dpi=300)
-```
-
-:::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Make other types of plots:
 
@@ -358,21 +283,13 @@ Matplotlib can make many other types of plots in much the same way that it makes
 "Source code" link and copy and paste into a new cell in Jupyter Notebook or
 save as a text file with a .py extension and run in the command line).
 
-:::::::::::::::::::::::::::::::::::::::  challenge
 
-## Challenge - Final Plot
-
-Display your data using one or more plot types from the example gallery. Which
-ones to choose will depend on the content of your own data file. If you are
-using the streamgage file [bouldercreek_09_2013.txt](data/bouldercreek_09_2013.txt), you could make a
-histogram of the number of days with a given mean discharge, use bar plots
-to display daily discharge statistics, or explore the different ways matplotlib
-can handle dates and times for figures.
-
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-
-
+> ## Challenge - Final Plot
+> 
+> Display your data using one or more plot types from the example gallery. Which
+> ones to choose will depend on the content of your own data file.
+> 
+> {: .source}
+{: .challenge}
 
 
