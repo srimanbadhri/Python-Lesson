@@ -167,8 +167,8 @@ os.listdir('data')
 
 The command  os.listdir is equivalent to  ls in the shell.
 
-In previous lessons, we saw how to use the library pandas to load the species
-data into memory as a DataFrame, how to select a subset of the data using some
+In previous lessons, we saw how to use the library pandas to load the data into 
+memory as a DataFrame, how to select a subset of the data using some
 criteria, and how to write the DataFrame into a CSV file. Let's write a script
 that performs those three steps in sequence for the year 2002:
 
@@ -1108,3 +1108,10 @@ One keyword, default start:	1994 1997
 > >
 > {: .solution}
 {: .challenge}
+
+
+## More resources
+
+- [Python Tutorial for Beginners 7: Loops and Iterations - For/While Loops (VIDEO)](https://www.youtube.com/watch?v=6iF8Xb7Z3wQ)
+
+- [Python Tutorial for Beginners 8: Functions (VIDEO)](https://www.youtube.com/watch?v=9Os0o3wzS_I)

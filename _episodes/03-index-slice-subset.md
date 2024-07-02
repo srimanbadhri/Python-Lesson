@@ -50,14 +50,14 @@ In this lesson, we will explore ways to access different parts of the data using
 
 ## Loading our data
 
-We will continue to use the surveys dataset that we worked with in the last
+We will continue to use the births dataset that we worked with in the last
 episode. Let's reopen and read in the data again:
 
 ```python
 # Make sure pandas is loaded
 import pandas as pd
 
-# Read in the survey CSV
+# Read in the birth CSV
 pd.read_csv("data/US_births_2000-2014_SSA.csv")
 ```
 
@@ -70,7 +70,7 @@ numeric ranges, or specific x,y index locations.
 ## Selecting data using Labels (Column Headings)
 
 We use square brackets [] to select a subset of a Python object. For example,
-we can select all data from a column named species_id from the births_df
+we can select all data from a column named year from the births_df
 DataFrame by name. There are two ways to do this:
 
 ```python
@@ -83,11 +83,11 @@ births_df.year
 ```
 
 We can also create a new object that contains only the data within the
-species_id column as follows:
+year column as follows:
 
 ```python
-# Creates an object, surveys_species, that only contains the species_id column
-surveys_years = births_df['year']
+# Creates an object, births_years, that only contains the year column
+births_years = births_df['year']
 ```
 
 We can pass a list of column names too, as an index to select columns in that
@@ -97,7 +97,7 @@ order. This is useful when we need to reorganize our data.
 (error) will be raised.
 
 ```python
-# Select the species and plot columns from the DataFrame
+# Select the year and births columns from the DataFrame
 births_df[['year', 'births']]
 
 # What happens when you flip the order?
@@ -376,12 +376,11 @@ selects the element that is 3 rows down and 7 columns over in the DataFrame.
 
 It is worth noting that rows are selected when using loc with a single list of
 labels (or iloc with a single list of integers). However, unlike loc or iloc,
-indexing a data frame directly with labels will select columns (e.g.
-births_df[['species_id', 'plot_id', 'weight']]), while ranges of integers will
-select rows (e.g. surveys\_df[0:13]). Direct indexing of rows is redundant with
-using iloc, and will raise a KeyError if a single integer or list is used; the
-error will also occur if index labels are used without loc (or column labels used
-with it).
+indexing a data frame directly with labels will select columns, while ranges of
+integers willselect rows (e.g. births\_df[0:13]). Direct indexing of rows is 
+redundant withusing iloc, and will raise a KeyError if a single integer or list 
+is used; theerror will also occur if index labels are used without loc (or 
+column labels used with it).
 A useful rule of thumb is the following: integer-based slicing is best done with
 iloc and will avoid errors (and is generally consistent with indexing of Numpy
 arrays), label-based slicing of rows is done with loc, and slicing of columns by
@@ -458,7 +457,7 @@ births_df[(births_df.year >= 1980) & (births_df.year <= 1985)]
 ### Python Syntax Cheat Sheet
 
 We can use the syntax below when querying data by criteria from a DataFrame.
-Experiment with selecting various subsets of the "surveys" data.
+Experiment with selecting various subsets of the "births" data.
 
 - Equals: ==
 - Not equals: !=
@@ -526,9 +525,7 @@ Experiment with selecting various subsets of the "surveys" data.
 
 ## Using masks to identify a specific condition
 
-A **mask** can be useful to locate where a particular subset of values exist or
-don't exist - for example,  NaN, or "Not a Number" values. To understand masks,
-we also need to understand BOOLEAN objects in Python.
+A **mask** is an array containing true or false values that correspond to each element in the array. This can be used to help locate where specific values, like NaN (Not a Number), exist or don’t exist. To understand masks, we also need to understand BOOLEAN objects in Python.
 
 Boolean values include True or False. For example,
 
@@ -543,22 +540,16 @@ x > 5
 x == 5
 ```
 
-When we ask Python whether x is greater than 5, it returns False.
-This is Python's way to say "No". Indeed, the value of x is 5,
-and 5 is not greater than 5.
+When we ask Python if x is greater than 5, it returns False, meaning "No." This is because x is 5, and 5 is not greater than 5.
 
 To create a boolean mask:
 
 - Set the True / False criteria (e.g. values > 5 = True)
-- Python will then assess each value in the object to determine whether the
-  value meets the criteria (True) or not (False).
-- Python creates an output object that is the same shape as the original
-  object, but with a True or False value for each index location.
+- Python will then check each value in the object to see if it meets the criteria (True) or not (False).
+- Python creates an output object with the same shape as the original, but with True or False for each index location.
 
-Let's try this out. Let's identify all locations in the survey data that have
-null (missing or NaN) data values. We can use the isnull method to do this.
-The isnull method will compare each cell with a null value. If an element
-has a null value, it will be assigned a value of True in the output object.
+Let’s try this out with the births data to identify all locations with null (missing or NaN) values. 
+We can use the isnull method, which will compare each cell with a null value. If an element is null, it will be marked as True in the output object.
 
 ```python
 pd.isnull(births_df)
@@ -597,7 +588,7 @@ asking Python to select rows that have a NaN value of weight.
 > 1. Create a new DataFrame that only contains observations with day_of_week values that are **not** 1-7
 >    Print the number of rows in this new DataFrame.
 >    Verify the result by comparing the number of rows in the new DataFrame with
->    the number of rows in the surveys DataFrame where day_of_week is null.
+>    the number of rows in the births DataFrame where day_of_week is null.
 > 2. Create a new DataFrame that contains only observations that are of day_of_week 6
 >    or 7 and where births values are greater than 10,000.
 >    Create a stacked bar plot of average weight by plot 
@@ -657,6 +648,11 @@ stack_selection.columns = stack_selection.columns.droplevel()
 > 
 > {: .source}
 {: .callout}
+
+
+## More resources
+
+- [Python Data Analysis Tutorial 07: Indexing and Subsetting (VIDEO)](https://www.youtube.com/watch?v=hW9xlDqhyn8)
 
 
 

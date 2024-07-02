@@ -72,7 +72,7 @@ is in the table below:
 ## Checking the format of our data
 
 Now that we're armed with a basic understanding of numeric and text data
-types, let's explore the format of our survey data. We'll be working with the
+types, let's explore the format of our birth data. We'll be working with the
 same dataset that we've used in previous lessons.
 
 ```python
@@ -304,16 +304,6 @@ sure the CSV wrote out properly, and that you can open it! If you want, try to b
 back into Python to make sure it imports properly.
 
 
-> ## Instructor Note - Processed Data Checkpoint:
->
-> If learners have trouble generating the output, or anything happens with that, the folder
-> [sample_output](https://github.com/datacarpentry/python-ecology-lesson/tree/main/sample_output)
-> in this repository contains the file surveys_complete.csv with the data they should generate.
-> 
-> {: .source}
-{: .callout}
-
-
 ## Recap
 
 What we've learned:
@@ -324,4 +314,8 @@ What we've learned:
 - How to replace NaN values, if desired
 - How to use to_csv to write manipulated data to a file.
 
+
+## More resources
+
+- [Python Tutorial for Beginners: Understand Python Data Types in 10 minutes (VIDEO)](https://www.youtube.com/watch?v=KrToaEvDzdk)
 

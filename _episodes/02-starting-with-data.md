@@ -47,15 +47,10 @@ from Ernst et al.
 [Long-term monitoring and experimental manipulation of a Chihuahuan Desert ecosystem near Portal,
 Arizona, USA][ernst].
 
-We will be using files from the [Portal Project Teaching Database](https://figshare.com/articles/Portal_Project_Teaching_Database/1314459).
-This section will use the surveys.csv file that can be downloaded here:
-[https://ndownloader.figshare.com/files/2292172](https://ndownloader.figshare.com/files/2292172)
-
-We are studying the **species** and **weight** of animals caught in sites in our study
-area. The dataset is stored as a .csv file: each row holds information for a
+We are studying number of births on every day over the course of 20 years. The 
+dataset is stored as a .csv file: each row holds information for a
 single birth, and the columns represent:
 
-year,month,date_of_month,day_of_week,births
 
 
 | Column          | Description                   | 
@@ -105,7 +100,7 @@ time we call a Pandas function.
 
 ## Reading CSV Data Using Pandas
 
-We will begin by locating and reading our survey data which are in CSV format. CSV stands for
+We will begin by locating and reading our data which are in CSV format. CSV stands for
 Comma-Separated Values and is a common way to store formatted data. Other symbols may also be used, so
 you might see tab-separated, colon-separated or space separated files. pandas can work with each of these
 types of separators, as it allows you to specify the appropriate separator for your data.
@@ -171,9 +166,9 @@ births_df.head() # The head() method displays the first several lines of a file.
                   # is discussed below.
 ```
 
-![Survey DF Head](/assets/img/df-head.png)
+![Births DF Head](/assets/img/df-head.png)
 
-### Exploring Our Species Survey Data
+### Exploring Our Data
 
 Again, we can use the type function to see what kind of thing births_df is:
 
@@ -204,11 +199,8 @@ births           int64
 dtype: object
 ```
 
-All the values in a single column have the same type. For example, values in the month
-column have type int64, which is a kind of integer. Cells in the month column cannot have
-fractional values, but values in weight and hindfoot\_length columns can, because they
-have type float64. The object type doesn't have a very helpful name, but in
-this case it represents strings (such as 'M' and 'F' in the case of sex).
+All the values in a single column have the same type,  int64, which is a kind of 
+integer. Cells in these columns cannot have fractional values
 
 We'll talk a bit more about what the different formats mean in a different lesson.
 
@@ -276,10 +268,9 @@ births_df.columns[4] = "dateofmonth" returns a TypeError.
 ### Calculating Statistics From Data In A Pandas DataFrame
 
 We've read our data into Python. Next, let's perform some quick summary
-statistics to learn more about the data that we're working with. We might want
-to know how many animals were collected in each site, or how many of each
-species were caught. We can perform summary stats quickly using groups. But
-first we need to figure out what we want to group by.
+statistics to learn more about the data that we're working with. We can perform 
+summary stats quickly using groups. Butfirst we need to figure out what we want 
+to group by.
 
 Let's begin by exploring our data:
 
@@ -313,7 +304,7 @@ array([2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
 
 > ## Challenge - Statistics
 > 
-> 1. Create a list of unique month dates ("date\_of\_month") found in the surveys data. Call it month_dates. How many unique month dates are there in the data? How many unique weekdays are in the data?
+> 1. Create a list of unique month dates ("date\_of\_month") found in the data. Call it month_dates. How many unique month dates are there in the data? How many unique weekdays are in the data?
 > 2. What is the difference between len(month_dates) and births_df['date_of_month'].nunique()?
 >
 > > ## Solution
@@ -338,7 +329,7 @@ array([2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
 
 We often want to calculate summary statistics grouped by subsets or attributes
 within fields of our data. For example, we might want to calculate the average
-weight of all individuals per site.
+births of all dates.
 
 We can calculate basic statistics for all records in a single column using the
 syntax below:
@@ -360,11 +351,6 @@ min       5728.000000
 max      16081.000000
 Name: births, dtype: float64
 ```
-
-> ## Instructor: Important Bug Note
-> In pandas prior to version 0.18.1 there is a bug causing births_df['weight'].describe() to return a runtime error.
-> {: .source}
-{: .callout}
 
 We can also extract one specific metric if we wish:
 
@@ -431,7 +417,7 @@ summary stats.
 
 ## Quickly Creating Summary Counts in Pandas
 
-Let's next count the number of samples for each species. We can do this in a few
+Let's next count the number of births for each year. We can do this in a few
 ways, but we'll use groupby combined with **a count() method**.
 
 ```python
@@ -439,13 +425,6 @@ ways, but we'll use groupby combined with **a count() method**.
 year_counts = births_df.groupby('year')['births'].count()
 print(year_counts)
 ```
-
-Or, we can also count just the rows that have the species "DO":
-
-```python
-births_df.groupby('year')['births'].count()['1']
-```
-
 
 > ## Challenge - Make a list
 > 
@@ -491,10 +470,10 @@ Name: births, dtype: int64
 ### Basic Math Functions
 
 If we wanted to, we could apply a mathematical operation like addition or division
-on an entire column of our data. For example, let's multiply all weight values by 2.
+on an entire column of our data. For example, let's multiply all births values by 2.
 
 ```python
-# Multiply all weight values by 2
+# Multiply all births values by 2
 births_df['births']*2
 ```
 
@@ -512,9 +491,6 @@ We can plot our summary stats using Pandas, too.
 year_counts.plot(kind='bar');
 ```
 ![Year Chart](/assets/img/year-chart.png)
-
-![](fig/countPerSpecies.png){alt='Weight by Species Site'}
-Count per species site
 
 We can also look at how many unique birth numbers were recorded
 
@@ -541,6 +517,12 @@ total_count.plot(kind='bar');
 > > 
 > {: .solution}
 {: .challenge}
+
+
+## More resources
+
+- [Python CSV files - with PANDAS (VIDEO)](https://www.youtube.com/watch?v=ClNP-lTzKgI)
+
 
 
 

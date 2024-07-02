@@ -57,15 +57,6 @@ births_complete = pd.read_csv('data/US_births_1994-2003_CDC_NCHS.csv')
 births_complete = births_complete.dropna()
 ```
 
-> ## Instructor Note
->
-> If learners have trouble generating the output, or anything happens with that, the folder
-> [sample_output](https://github.com/datacarpentry/python-ecology-lesson/tree/main/sample_output)
-> in this repository contains the file surveys_complete.csv with the data they should generate.
-> 
-> {: .source}
-{: .callout}
-
 
 ## Plotting with plotnine
 
@@ -331,37 +322,6 @@ better idea of the number of measurements and of their distribution:
 
 ![Boxplot With Points](/assets/img/boxplot-with-points.png)
 
-> ## Challenge - distributions
-> 
-> Boxplots are useful summaries, but hide the *shape* of the distribution.
-> For example, if there is a bimodal distribution, this would not be observed
-> with a boxplot. An alternative to the boxplot is the violin plot (sometimes
-> known as a beanplot), where the shape (of the density of points) is drawn.
-> 
-> In many types of data, it is important to consider the *scale* of the
-> observations.  For example, it may be worth changing the scale of the axis
-> to better distribute the observations in the space of the plot.
-> 
-> - Replace the box plot with a violin plot, see geom_violin()
-> - Represent weight on the log10 scale, see scale_y_log10()
-> - Add color to the datapoints on your boxplot according to the month
-> 
-> > ## Solution
-> > 
-> > ```python
-> > (p9.ggplot(data=surveys_complete,
-> >            mapping=p9.aes(x='species_id',
-> >                           y='weight',
-> >                           color='factor(month)'))
-> >     + p9.geom_jitter(alpha=0.3)
-> >     + p9.geom_violin(alpha=0, color="0.7")
-> >     + p9.scale_y_log10()
-> > )
-> > ```
-> > 
-> {: .solution}
-{: .challenge}
-
 
 ## Plotting time series data
 
@@ -372,19 +332,19 @@ Timelapse data can be visualised as a line plot (geom_line) with years on x
 axis and counts on the y axis.
 
 ```python
-(p9.ggplot(data=yearly_counts,
+(p9.ggplot(data=yearly_births,
            mapping=p9.aes(x='year',
                           y='births'))
     + p9.geom_line()
 )
 ```
 
-Unfortunately this does not work, because we plot data for all the species
-together. We need to tell plotnine to draw a line for each species by
-modifying the aesthetic function and map the species\_id to the color:
+Unfortunately this does not work, because we plot data for all the births values
+together. We need to tell plotnine to draw a line for each births value by
+modifying the aesthetic function and map the births to the color:
 
 ```python
-(p9.ggplot(data=yearly_counts,
+(p9.ggplot(data=yearly_births,
            mapping=p9.aes(x='year',
                           y='births',
                           color='births'))
@@ -476,7 +436,7 @@ labels overlapping with each other. The theme functionality provides a way to
 rotate the text of the x-axis labels:
 
 ```python
-(p9.ggplot(data=surveys_complete,
+(p9.ggplot(data=births_complete,
            mapping=p9.aes(x='factor(year)'))
     + p9.geom_bar()
     + p9.theme_bw()
@@ -502,7 +462,6 @@ my_custom_theme = p9.theme(axis_text_x = p9.element_text(color="grey", size=10,
 
 ![Custom Theme](/assets/img/custom-theme.png)
 
-:::::::::::::::::::::::::::::::::::::::  challenge
 
 > ## Challenge - Customization
 > 
@@ -530,4 +489,6 @@ my_plot = (p9.ggplot(data=births_complete,
 my_plot.save("scatterplot.png", width=10, height=10, dpi=300)
 ```
 
+## More resources
 
+- [Plotnine: A Different Approach To Data Visualization in Python (VIDEO)](https://www.youtube.com/watch?v=2KrJ2tNrvGo)
